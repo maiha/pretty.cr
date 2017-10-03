@@ -4,10 +4,10 @@
 #
 # ```crystal
 # lines = [
-#   ["user", "=", "maiha"],
-#   ["password", "=", "123"],
+#   ["user", "maiha"],
+#   ["password", "123"],
 # ]
-# puts Pretty.lines(lines, delimiter: " ")
+# puts Pretty.lines(lines, delimiter: " = ")
 # ```
 #
 # prints

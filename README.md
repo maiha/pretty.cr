@@ -2,7 +2,7 @@
 
 Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 
-- crystal: 0.22.0
+- crystal: 0.23.1
 
 ## Installation
 
@@ -21,16 +21,17 @@ dependencies:
 require "pretty"
 ```
 
-### `lines`
+### `lines : String`
+- args: `(lines : Array(Array(String)), indent : String = "", delimiter : String = "")`
 
-- formats `Array(Array(String))` as table-like text.
+formats `Array(Array(String))` as table-like text.
 
 ```crystal
 array = [
-  ["user", "=", "maiha"],
-  ["password", "=", "123"],
+  ["user", "maiha"],
+  ["password", "123"],
 ]
-Pretty.lines(array, delimiter: " ")
+Pretty.lines(array, delimiter: " = ")
 # user     = maiha
 # password = 123
 ```
