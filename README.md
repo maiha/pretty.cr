@@ -1,4 +1,4 @@
-# pretty.cr
+# pretty.cr [![Build Status](https://travis-ci.org/maiha/pretty.cr.svg?branch=master)](https://travis-ci.org/maiha/pretty.cr)
 
 Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 
@@ -22,6 +22,8 @@ require "pretty"
 ```
 
 ### `lines`
+
+- formats `Array(Array(String))` as table-like text.
 
 ```crystal
 array = [
