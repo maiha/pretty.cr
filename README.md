@@ -4,10 +4,12 @@ Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 
 - crystal: 0.23.1
 
-## Features
+## API
 
-- `Pretty.lines` : formats `Array(Array(String))` as table-like text.
-- `Pretty.json` : formats JSON string
+```crystal
+Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
+Pretty.json(json : String, color : Bool = false)
+```
 
 ## Installation
 
@@ -20,14 +22,14 @@ dependencies:
     version: 0.2.0
 ```
 
-## Usage
-
+Then require it in your app.
 ```crystal
 require "pretty"
 ```
 
-### `lines : String`
-- args: `(lines : Array(Array(String)), indent : String = "", delimiter : String = "")`
+## Usage
+
+#### `Pretty.lines(args) : String`
 
 ```crystal
 array = [
@@ -35,20 +37,25 @@ array = [
   ["password", "123"],
 ]
 Pretty.lines(array, delimiter: " = ")
-# user     = maiha
-# password = 123
 ```
 
-### `json : String`
-- args: `(json : String, color : Bool = false)`
+```
+user     = maiha
+password = 123
+```
+
+#### `Pretty.json(args) : String`
 
 ```crystal
-json = %({"id": "123", "name": "maiha"})
-Pretty.lines(json)
-# {
-#   "id": "123",
-#   "name": "maiha"
-# }
+str = %({"id": "123", "name": "maiha"})
+Pretty.json(str)
+```
+
+```
+{
+  "id": "123",
+  "name": "maiha"
+}
 ```
 
 ## Development
