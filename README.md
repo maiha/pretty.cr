@@ -4,6 +4,11 @@ Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 
 - crystal: 0.23.1
 
+## Features
+
+- `Pretty.lines` : formats `Array(Array(String))` as table-like text.
+- `Pretty.json` : formats JSON string
+
 ## Installation
 
 Add this to your application's `shard.yml`:
@@ -24,8 +29,6 @@ require "pretty"
 ### `lines : String`
 - args: `(lines : Array(Array(String)), indent : String = "", delimiter : String = "")`
 
-formats `Array(Array(String))` as table-like text.
-
 ```crystal
 array = [
   ["user", "maiha"],
@@ -34,6 +37,18 @@ array = [
 Pretty.lines(array, delimiter: " = ")
 # user     = maiha
 # password = 123
+```
+
+### `json : String`
+- args: `(json : String, color : Bool = false)`
+
+```crystal
+json = %({"id": "123", "name": "maiha"})
+Pretty.lines(json)
+# {
+#   "id": "123",
+#   "name": "maiha"
+# }
 ```
 
 ## Development
