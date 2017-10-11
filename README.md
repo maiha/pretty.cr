@@ -20,7 +20,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   pretty:
     github: maiha/pretty.cr
-    version: 0.2.0
+    version: 0.3.0
 ```
 
 Then require it in your app.
@@ -28,7 +28,7 @@ Then require it in your app.
 require "pretty"
 ```
 
-## Usage
+## Usage(lines)
 
 #### `Pretty.lines(args) : String`
 
@@ -45,6 +45,8 @@ user     = maiha
 password = 123
 ```
 
+## Usage(json)
+
 #### `Pretty.json(args) : String`
 
 ```crystal
@@ -58,6 +60,8 @@ Pretty.json(str)
   "name": "maiha"
 }
 ```
+
+## Usage(time)
 
 #### `Pretty::Time.parse(args) : Time`
 
