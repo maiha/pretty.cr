@@ -9,6 +9,7 @@ Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 ```crystal
 Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
 Pretty.json(json : String, color : Bool = false)
+Pretty::Time.parse(value : String)
 ```
 
 ## Installation
@@ -56,6 +57,17 @@ Pretty.json(str)
   "id": "123",
   "name": "maiha"
 }
+```
+
+#### `Pretty::Time.parse(args) : Time`
+
+aka. `Pretty.time`
+
+```crystal
+Pretty.time("2000-01-02")                    # => 2000-01-02 00:00:00 UTC
+Pretty.time("2000-01-02 03:04:05")           # => 2000-01-02 03:04:05 UTC
+Pretty.time("2000-01-02 03:04:05.678")       # => 2000-01-02 03:04:05 UTC
+Pretty.time("2000-01-02T03:04:05.678+09:00") # => 2000-01-02 03:04:05 +0900
 ```
 
 ## Development
