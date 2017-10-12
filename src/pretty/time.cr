@@ -18,36 +18,36 @@ module Pretty::Time
   end
 
   def self.parse(value : String, kind : ::Time::Kind? = nil) : ::Time
-    kind ||= ::Time::Kind::Utc
-    pattern = guess_pattern(value)
-    ::Time.parse(value, pattern, kind)
-  end
-
-  private def self.guess_pattern(value : String)
+    utc = ::Time::Kind::Utc
+    kind ||= utc
     case value
-    when /\A\d{4}-\d{2}-\d{2}([ T])\d{2}:\d{2}:\d{2}\Z/
+    when /\A\d{4}-\d{2}-\d{2}([ T])\d{2}:\d{2}:\d{2}(Z?)\Z/
       # "2000-01-02 03:04:05"
       # "2000-01-02T03:04:05"
-      "%F#{$1}%T"
+      # "2000-01-02T03:04:05Z"
+      kind = utc if $2
+      ::Time.parse(value, "%F#{$1}%T", kind)
     when /\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}( ?)\+\d{2}(:?)\d{2}\Z/
       # "2000-01-02T03:04:05+0900"
       # "2000-01-02T03:04:05+09:00"
       # "2000-01-02T03:04:05 +0900"
       # "2000-01-02T03:04:05 +09:00"
-      "%FT%T#{$1}%#{$2}z"
-    when /\A\d{4}-\d{2}-\d{2}([ T])\d{2}:\d{2}:\d{2}\.\d{3}\Z/
+      ::Time.parse(value, "%FT%T#{$1}%#{$2}z", kind)
+    when /\A\d{4}-\d{2}-\d{2}([ T])\d{2}:\d{2}:\d{2}\.\d{3}(Z?)\Z/
       # "2000-01-02 03:04:05.678"
       # "2000-01-02T03:04:05.678"
-      "%F#{$1}%T.%L"
+      # "2000-01-02T03:04:05.678Z"
+      kind = utc if $2
+      ::Time.parse(value, "%F#{$1}%T.%L", kind)
     when /\A\d{4}-\d{2}-\d{2}([ T])\d{2}:\d{2}:\d{2}\.\d{3}( ?)\+\d{2}(:?)\d{2}\Z/
       # "2000-01-02 03:04:05.678+0900"
       # "2000-01-02 03:04:05.678+09:00"
       # "2000-01-02T03:04:05.678 +0900"
       # "2000-01-02T03:04:05.678 +09:00"
-      "%F#{$1}%T.%L#{$2}%#{$3}z"
+      ::Time.parse(value, "%F#{$1}%T.%L#{$2}%#{$3}z", kind)
     when /\A(\d{4}-\d{2}-\d{2})\Z/
       # "2000-01-02"
-      "%F"
+      ::Time.parse(value, "%F", kind)
     else
       raise ParseError.new(value)
     end
