@@ -7,6 +7,7 @@ Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 ## API
 
 ```crystal
+Pretty.bytes(value : Int, block = 1000, suffix = "B")
 Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
 Pretty.json(json : String, color : Bool = false)
 Pretty::Time.parse(value : String)
@@ -26,6 +27,16 @@ dependencies:
 Then require it in your app.
 ```crystal
 require "pretty"
+```
+
+## Usage(bytes)
+
+#### `Pretty.bytes(args) : String`
+
+```crystal
+Pretty.bytes(416)                   # => "416.0 B"
+Pretty.bytes(12255736)              # => "12.3 MB"
+Pretty.bytes(12255736, block: 1024) # => "11.7 MiB"
 ```
 
 ## Usage(lines)
