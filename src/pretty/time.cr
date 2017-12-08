@@ -49,6 +49,9 @@ module Pretty::Time
     when /\A(\d{4}-\d{2}-\d{2})\Z/
       # "2000-01-02"
       ::Time.parse(value, "%F", kind)
+    when /\A(?<year>\d{4})[-: ]?(?<month>\d{2})[-: ]?(?<day>\d{2})[-: ]?(?<hour>\d{2})[-: ]?(?<min>\d{2})[-: ]?(?<sec>\d{2})?\Z/
+      # finally, we give best effort to parse something
+      ::Time.new($~["year"].to_i, $~["month"].to_i, $~["day"].to_i, $~["hour"].to_i, $~["min"].to_i,  $~["sec"]?.try(&.to_i) || 0)
     else
       raise ParseError.new(value)
     end
