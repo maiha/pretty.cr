@@ -34,7 +34,7 @@ require "pretty"
 #### `Pretty.bytes(args) : String`
 
 ```crystal
-Pretty.bytes(416)                   # => "416.0 B"
+Pretty.bytes(416)                   # => "416 B"
 Pretty.bytes(12255736)              # => "12.3 MB"
 Pretty.bytes(12255736, block: 1024) # => "11.7 MiB"
 ```

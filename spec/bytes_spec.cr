@@ -7,18 +7,24 @@ private macro bytes(value, expected)
 end
 
 describe "Pretty.bytes" do
-  bytes 416, "416.0 B"
+  bytes 416, "416 B"
   bytes 3819, "3.8 KB"
-  bytes 103503, "103.5 KB"
+  bytes 103503, "103 KB"
   bytes 12255736, "12.3 MB"
 
   context "(with block)" do
     bytes "12255736, block: 1024", "11.7 MiB"
   end
 
+  context "(with prefix)" do
+    it "(12, prefix: \"\")" do
+      Pretty.bytes(12, prefix: "").should eq("12.0B")
+    end
+  end
+
   context "(with suffix)" do
     it "(416, suffix: \"bytes\")" do
-      Pretty.bytes(416, suffix: "bytes").should eq("416.0 bytes")
+      Pretty.bytes(416, suffix: "bytes").should eq("416 bytes")
     end
 
     it "(12255736, suffix: \"\")" do
