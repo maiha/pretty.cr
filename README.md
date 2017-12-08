@@ -2,6 +2,12 @@
 
 Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 
+```crystal
+Pretty.bytes(123456789)                # => "123 MB"
+Pretty.number(123456789)               # => "123,456,789"
+Pretty.time("2000-01-02 03:04:05.678") # => 2000-01-02 03:04:05 UTC
+```
+
 - crystal: 0.23.1
 
 ## API
@@ -31,9 +37,9 @@ Then require it in your app.
 require "pretty"
 ```
 
-## Usage(bytes)
+## Usage
 
-#### `Pretty.bytes(args) : String`
+### `Pretty.bytes(args) : String`
 
 ```crystal
 Pretty.bytes(416)                   # => "416 B"
@@ -41,34 +47,28 @@ Pretty.bytes(12255736)              # => "12.3 MB"
 Pretty.bytes(12255736, block: 1024) # => "11.7 MiB"
 ```
 
-## Usage(error)
-
-#### `Pretty.error(err) : Pretty::Error`
+### `Pretty.error(err) : Pretty::Error`
 
 ```crystal
 err.backtrace            # => ["0x48df77: *CallStack::unwind:Array(Pointer(Void))
 Pretty.error(err).where  # => "foo at spec/error_spec.cr 5:5"
 ```
 
-## Usage(json)
-
-#### `Pretty.json(args) : String`
+### `Pretty.json(args) : String`
 
 ```crystal
 str = %({"id": "123", "name": "maiha"})
 Pretty.json(str)
 ```
 
-```
+```json
 {
   "id": "123",
   "name": "maiha"
 }
 ```
 
-## Usage(lines)
-
-#### `Pretty.lines(args) : String`
+### `Pretty.lines(args) : String`
 
 ```crystal
 array = [
@@ -83,19 +83,15 @@ user     = maiha
 password = 123
 ```
 
-## Usage(number)
-
-#### `Pretty.number(n) : String`
+### `Pretty.number(n) : String`
 
 ```crystal
 Pretty.number(1000000)  # => "1,000,000"
 ```
 
-## Usage(time)
+### `Pretty::Time.parse(args) : Time` (aka. `Pretty.time`)
 
-#### `Pretty::Time.parse(args) : Time`
-
-aka. `Pretty.time`
+parses time without format!
 
 ```crystal
 Pretty.time("2000-01-02")                    # => 2000-01-02 00:00:00 UTC
