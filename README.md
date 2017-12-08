@@ -39,6 +39,15 @@ Pretty.bytes(12255736)              # => "12.3 MB"
 Pretty.bytes(12255736, block: 1024) # => "11.7 MiB"
 ```
 
+## Usage(error)
+
+#### `Pretty.error(err) : Pretty::Error`
+
+```crystal
+err.backtrace            # => ["0x48df77: *CallStack::unwind:Array(Pointer(Void))
+Pretty.error(err).where  # => "foo at spec/error_spec.cr 5:5"
+```
+
 ## Usage(lines)
 
 #### `Pretty.lines(args) : String`
