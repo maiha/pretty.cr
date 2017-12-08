@@ -8,8 +8,10 @@ Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 
 ```crystal
 Pretty.bytes(value : Int, block = 1000, suffix = "B")
-Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
+Pretty.error(err : Exception)
 Pretty.json(json : String, color : Bool = false)
+Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
+Pretty.number(n : Int)
 Pretty::Time.parse(value : String)
 ```
 
@@ -48,6 +50,22 @@ err.backtrace            # => ["0x48df77: *CallStack::unwind:Array(Pointer(Void)
 Pretty.error(err).where  # => "foo at spec/error_spec.cr 5:5"
 ```
 
+## Usage(json)
+
+#### `Pretty.json(args) : String`
+
+```crystal
+str = %({"id": "123", "name": "maiha"})
+Pretty.json(str)
+```
+
+```
+{
+  "id": "123",
+  "name": "maiha"
+}
+```
+
 ## Usage(lines)
 
 #### `Pretty.lines(args) : String`
@@ -65,20 +83,12 @@ user     = maiha
 password = 123
 ```
 
-## Usage(json)
+## Usage(number)
 
-#### `Pretty.json(args) : String`
+#### `Pretty.number(n) : String`
 
 ```crystal
-str = %({"id": "123", "name": "maiha"})
-Pretty.json(str)
-```
-
-```
-{
-  "id": "123",
-  "name": "maiha"
-}
+Pretty.number(1000000)  # => "1,000,000"
 ```
 
 ## Usage(time)
