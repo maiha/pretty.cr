@@ -17,6 +17,10 @@ module Pretty::Time
     end
   end
 
+  def self.parse?(value : String, kind : ::Time::Kind? = nil) : ::Time?
+    parse(value, kind) rescue nil
+  end
+  
   def self.parse(value : String, kind : ::Time::Kind? = nil) : ::Time
     utc = ::Time::Kind::Utc
     kind ||= utc
@@ -68,5 +72,9 @@ end
 module Pretty
   def self.time(value : String, kind : ::Time::Kind? = nil) : ::Time
     Pretty::Time.parse(value, kind: kind)
+  end
+
+  def self.time?(value : String, kind : ::Time::Kind? = nil) : ::Time?
+    Pretty::Time.parse?(value, kind: kind)
   end
 end

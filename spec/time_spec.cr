@@ -48,4 +48,48 @@ describe "Pretty.time" do
   # (like filenames)
   parse "20000102-0304"           , utc(2000,1,2,3,4,0)
   parse "20000102-030405"         , utc(2000,1,2,3,4,5)
+
+  context "(invalid input)" do
+    it "raises " do
+      expect_raises(Pretty::Time::ParseError) do
+        Pretty.time("foo")
+      end
+    end
+  end
+end
+
+describe "Pretty.time?" do
+  context "(valid input)" do
+    it "acts as same as '.time'" do
+      s = "2000-01-02 03:04:05"
+      Pretty.time?(s).should eq(Pretty.time(s))
+    end
+  end
+
+  context "(invalid input)" do
+    it "returns nil" do
+      Pretty.time?("foo").should eq(nil)
+    end
+  end
+end
+
+describe Pretty::Time do
+  describe ".parse" do
+    it "acts as same as 'Pretty.time'" do
+      s = "2000-01-02 03:04:05"
+      Pretty::Time.parse(s).should eq(Pretty.time(s))
+
+      expect_raises(Pretty::Time::ParseError) do
+        Pretty::Time.parse("foo")
+      end
+    end
+  end
+
+  describe ".parse?" do
+    it "acts as same as 'Pretty.time?'" do
+      s = "2000-01-02 03:04:05"
+      Pretty::Time.parse?(s).should eq(Pretty.time?(s))
+      Pretty::Time.parse?("foo").should eq(nil)
+    end
+  end
 end
