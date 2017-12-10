@@ -51,8 +51,13 @@ Pretty.bytes(12255736, block: 1024) # => "11.7 MiB"
 
 ```crystal
 err.backtrace            # => ["0x48df77: *CallStack::unwind:Array(Pointer(Void))
-Pretty.error(err).where  # => "foo at spec/error_spec.cr 5:5"
+Pretty.error(err).where  # => "mysql at src/commands/db.cr 20:3"
 ```
+
+##### **IMPORTANT**
+- We must call app with **path** for `where`, otherwise the app will be killed.
+  - :x: `foo`                # would kill your app in printing backtraces
+  - :o: `/usr/local/bin/foo` # will work
 
 ### `Pretty.json(args) : String`
 
