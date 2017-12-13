@@ -6,6 +6,8 @@ Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 Pretty.bytes(123456789)                # => "123 MB"
 Pretty.number(123456789)               # => "123,456,789"
 Pretty.time("2000-01-02 03:04:05.678") # => 2000-01-02 03:04:05 UTC
+Pretty.camelize("http_request")        # => "httpRequest"
+Pretty.classify("http_request")        # => "HttpRequest"
 ```
 
 - crystal: 0.23.1
@@ -14,6 +16,8 @@ Pretty.time("2000-01-02 03:04:05.678") # => 2000-01-02 03:04:05 UTC
 
 ```crystal
 Pretty.bytes(value : Int, block = 1000, suffix = "B")
+Pretty.camelize(str : String)
+Pretty.classify(str : String)
 Pretty.error(err : Exception)
 Pretty.json(json : String, color : Bool = false)
 Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
@@ -45,6 +49,18 @@ require "pretty"
 Pretty.bytes(416)                   # => "416 B"
 Pretty.bytes(12255736)              # => "12.3 MB"
 Pretty.bytes(12255736, block: 1024) # => "11.7 MiB"
+```
+
+### `Pretty.camelize(str) : String`
+
+```crystal
+Pretty.camelize("http_request")     # => "httpRequest"
+```
+
+### `Pretty.classify(str) : String`
+
+```crystal
+Pretty.classify("http_request")     # => "HttpRequest"
 ```
 
 ### `Pretty.error(err) : Pretty::Error`
