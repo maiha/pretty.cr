@@ -8,6 +8,7 @@ Pretty.number(123456789)               # => "123,456,789"
 Pretty.time("2000-01-02 03:04:05.678") # => 2000-01-02 03:04:05 UTC
 Pretty.camelize("http_request")        # => "httpRequest"
 Pretty.classify("http_request")        # => "HttpRequest"
+Pretty.diff(1,2).to_s                  # => "Expected '1', but got '2'"
 ```
 
 - crystal: 0.23.1
@@ -61,6 +62,17 @@ Pretty.camelize("http_request")     # => "httpRequest"
 
 ```crystal
 Pretty.classify("http_request")     # => "HttpRequest"
+```
+
+### `Pretty.diff(a, b) : Pretty::Diff`
+
+```crystal
+data1 = [[112433,15,0],[112465,7293,273]]
+data2 = [[112433,15,0],[112465,1307,273]]
+
+diff = Pretty.diff(data1, data2)
+diff.size # => 1
+diff.to_s # => "Expected '7293', but got '1307'"
 ```
 
 ### `Pretty.error(err) : Pretty::Error`
