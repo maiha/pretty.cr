@@ -12,6 +12,12 @@ private macro classify(value, expected)
   end
 end
 
+private macro underscore(value, expected)
+  it "({{value.id}}) # => '{{expected.id}}'" do
+    Pretty.underscore({{value}}).should eq({{expected}})
+  end
+end
+
 describe "Pretty.camelize" do
   camelize "foo", "foo"
   camelize "Foo", "foo"
@@ -28,4 +34,17 @@ describe "Pretty.classify" do
   classify "http_request", "HttpRequest"
   classify "httpRequest" , "HttpRequest"
   classify "HttpRequest" , "HttpRequest"
+end
+
+describe "Pretty.underscore" do
+  underscore "foo", "foo"
+  underscore "Foo", "foo"
+
+  underscore "http_request", "http_request"
+  underscore "httpRequest" , "http_request"
+  underscore "HttpRequest" , "http_request"
+
+  underscore "group12id" , "group12id"
+  underscore "group12Id" , "group12_id"
+  underscore "Group12Id" , "group12_id"
 end

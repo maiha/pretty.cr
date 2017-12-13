@@ -8,6 +8,7 @@ Pretty.number(123456789)               # => "123,456,789"
 Pretty.time("2000-01-02 03:04:05.678") # => 2000-01-02 03:04:05 UTC
 Pretty.camelize("http_request")        # => "httpRequest"
 Pretty.classify("http_request")        # => "HttpRequest"
+Pretty.underscore("a1Id")              # => "a1_id"
 Pretty.diff(1,2).to_s                  # => "Expected '1', but got '2'"
 ```
 
@@ -23,6 +24,7 @@ Pretty.error(err : Exception)
 Pretty.json(json : String, color : Bool = false)
 Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
 Pretty.number(n : Int)
+Pretty.underscore(str : String)
 Pretty::Time.parse(value : String)
 ```
 
