@@ -1,5 +1,7 @@
 SHELL=/bin/bash
 
+CRYSTAL ?= crystal
+
 VERSION=
 CURRENT_VERSION=$(shell git tag -l | sort -V | tail -1)
 GUESSED_VERSION=$(shell git tag -l | sort -V | tail -1 | awk 'BEGIN { FS="." } { $$3++; } { printf "%d.%d.%d", $$1, $$2, $$3 }')
@@ -9,7 +11,7 @@ test: check_version_mismatch spec
 
 .PHONY : spec
 spec:
-	crystal spec -v --fail-fast
+	$(CRYSTAL) spec -v --fail-fast
 
 .PHONY : check_version_mismatch
 check_version_mismatch: shard.yml README.md
