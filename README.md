@@ -12,7 +12,7 @@ Pretty.underscore("a1Id")              # => "a1_id"
 Pretty.diff(1,2).to_s                  # => "Expected '1', but got '2'"
 ```
 
-- crystal: 0.23.1
+- crystal: 0.24.1, 0.23.1
 
 ## API
 
