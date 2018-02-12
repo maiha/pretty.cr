@@ -10,6 +10,7 @@ Pretty.camelize("http_request")        # => "httpRequest"
 Pretty.classify("http_request")        # => "HttpRequest"
 Pretty.underscore("a1Id")              # => "a1_id"
 Pretty.diff(1,2).to_s                  # => "Expected '1', but got '2'"
+Pretty.method(1.5).call("ceil")        # => 2
 ```
 
 - crystal: 0.24.1, 0.23.1
@@ -23,6 +24,7 @@ Pretty.classify(str : String)
 Pretty.error(err : Exception)
 Pretty.json(json : String, color : Bool = false)
 Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
+Pretty.method(obj : T).call(name : String)
 Pretty.number(n : Int)
 Pretty.underscore(str : String)
 Pretty::Time.parse(value : String)
@@ -117,6 +119,18 @@ Pretty.lines(array, delimiter: " = ")
 user     = maiha
 password = 123
 ```
+
+### `Pretty.method(obj : T).call(name : String)`
+
+invoke method by `String`
+
+```crystal
+Pretty.method([1,2]).call("pop")  # => 2
+Pretty.method([1,2]).call?("xxx") # => nil
+```
+
+##### **NOTE**
+- works only public methods, not trailing equals, defined in itself not ancestors
 
 ### `Pretty.number(n) : String`
 
