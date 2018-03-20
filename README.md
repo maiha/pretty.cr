@@ -13,7 +13,7 @@ Pretty.diff(1,2).to_s                  # => "Expected '1', but got '2'"
 Pretty.method(1.5).call("ceil")        # => 2
 ```
 
-- crystal: 0.24.1, 0.23.1
+- crystal: 0.24.2
 
 ## API
 

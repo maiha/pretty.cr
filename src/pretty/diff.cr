@@ -7,13 +7,13 @@
 # Pretty.diff(1, nil).to_s  # => "Expected 'Int32', but got 'Nil'"
 # ```
 module Pretty
-  def self.diff(a, b, size : Int32 = 60)
-    Diff.diff(a,b).tap(&.output_size = size)
+  def self.diff(*args, **opts)
+    Diff.diff(*args, **opts)
   end
 end
 
 class Pretty::Diff
-  record Entry, message : String do
+  record Entry, message : String, index : Int32 = 0 do
     delegate to_s, to: message
   end
 
@@ -62,15 +62,19 @@ class Pretty::Diff
     new(entries)
   end
 
-  def self.diff(a,b) : Diff
+  def self.diff(a, b, value_truncate : Int32 = 30) : Diff
     return new(type_mismatch(a.class, b.class)) if a.class != b.class
     return ok if a == b
 
     if a.is_a?(Enumerable) && b.is_a?(Enumerable)
-      diffs = (0...[a.size, b.size].max).map{|i| diff(a[i]?, b[i]?).as(Diff)}
+      diffs = Array(Diff).new
+      (0...[a.size, b.size].max).to_a.each_with_index do |v i|
+        entry = diff(a[v]?, b[v]?, value_truncate)
+        diffs << entry
+      end
       return new(diffs)
     else
-      return new(value_mismatch(a, b))
+      return new(value_mismatch(a, b, truncate: value_truncate))
     end
   end
   
@@ -78,14 +82,14 @@ class Pretty::Diff
     new(Array(Entry).new)
   end
 
-  private def self.type_mismatch(c1, c2) : Entry
-    Entry.new("Expected '%s', but got '%s'" % [c1, c2])
+  private def self.type_mismatch(c1, c2, prefix : String = "") : Entry
+    Entry.new("#{prefix}Expected '#{c1}', but got '#{c2}'")
   end
 
-  private def self.value_mismatch(v1, v2) : Entry
-    v1 = Pretty.truncate(v1, size: 30)
-    v2 = Pretty.truncate(v2, size: 30)
-    Entry.new("Expected '%s', but got '%s'" % [v1, v2])
+  private def self.value_mismatch(v1, v2, truncate : Int32) : Entry
+    v1 = Pretty.truncate(v1, size: truncate)
+    v2 = Pretty.truncate(v2, size: truncate)
+    type_mismatch(v1, v2)
   end
 
   private def self.size_mismatch(s1, s2) : Entry
