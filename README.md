@@ -11,6 +11,7 @@ Pretty.classify("http_request")        # => "HttpRequest"
 Pretty.underscore("a1Id")              # => "a1_id"
 Pretty.diff(1,2).to_s                  # => "Expected '1', but got '2'"
 Pretty.method(1.5).call("ceil")        # => 2
+Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
 ```
 
 - crystal: 0.24.2
@@ -27,6 +28,7 @@ Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : Str
 Pretty.method(obj : T).call(name : String)
 Pretty.number(n : Int)
 Pretty.underscore(str : String)
+Pretty::Dir.clean(path : String)
 Pretty::Time.parse(value : String)
 ```
 
@@ -136,6 +138,14 @@ Pretty.method([1,2]).call?("xxx") # => nil
 
 ```crystal
 Pretty.number(1000000)  # => "1,000,000"
+```
+
+### `Pretty::Dir.clean(dir)`
+
+acts same as unix command `rm -rf dir && mkdir -p dir`.
+
+```crystal
+Pretty::Dir.clean("tmp/work")
 ```
 
 ### `Pretty::Time.parse(args) : Time` (aka. `Pretty.time`)
