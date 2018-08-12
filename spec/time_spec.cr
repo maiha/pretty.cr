@@ -1,19 +1,19 @@
 require "./spec_helper"
 
 private macro utc(*args)
-  Time.new({{*args}}, kind: Time::Kind::Utc)
+  Time.new({{*args}}, location: Time::Location::UTC)
 end
 
 private macro parse(value, time)
   it {{value}} do
     begin
       exp = {{time}}
-      got = Pretty.time({{value}}, kind: Time::Kind::Utc)
+      got = Pretty.time({{value}}, location: Time::Location::UTC)
       if got.epoch_ms == exp.epoch_ms
         got.should eq(exp)
       else
         # In error case, print time string rather than epoch itself
-        Pretty.time({{value}}, kind: Time::Kind::Utc).to_s("%FT%T.%L %z").should eq(({{time}}).to_s("%FT%T.%L %z"))
+        Pretty.time({{value}}, location: Time::Location::UTC).to_s("%FT%T.%L %z").should eq(({{time}}).to_s("%FT%T.%L %z"))
       end
     rescue err : Pretty::Time::ParseError
       fail err.to_s

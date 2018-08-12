@@ -14,7 +14,9 @@ Pretty.method(1.5).call("ceil")        # => 2
 Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
 ```
 
-- crystal: 0.24.2
+#### crystal versions
+- v0.5.7 for crystal-0.24 or lower
+- v0.6.0 for crystal-0.25 or higher
 
 ## API
 
