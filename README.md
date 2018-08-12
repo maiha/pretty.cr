@@ -42,7 +42,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   pretty:
     github: maiha/pretty.cr
-    version: 0.5.7
+    version: 0.6.0
 ```
 
 Then require it in your app.
