@@ -5,6 +5,7 @@ Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 ```crystal
 Pretty.bytes(123456789)                # => "123 MB"
 Pretty.number(123456789)               # => "123,456,789"
+Pretty.date("2001-02-03")              # => 2001-02-03 00:00:00.0 Local
 Pretty.time("2000-01-02 03:04:05.678") # => 2000-01-02 03:04:05 UTC
 Pretty.camelize("http_request")        # => "httpRequest"
 Pretty.classify("http_request")        # => "HttpRequest"
@@ -16,7 +17,7 @@ Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
 
 #### crystal versions
 - v0.5.7 for crystal-0.24 or lower
-- v0.6.0 for crystal-0.25 or higher
+- v0.6.0 for crystal-0.25, 0.26 or higher
 
 ## API
 
@@ -24,6 +25,7 @@ Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
 Pretty.bytes(value : Int, block = 1000, suffix = "B")
 Pretty.camelize(str : String)
 Pretty.classify(str : String)
+Pretty.date(value : String)
 Pretty.error(err : Exception)
 Pretty.json(json : String, color : Bool = false)
 Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
@@ -70,6 +72,22 @@ Pretty.camelize("http_request")     # => "httpRequest"
 
 ```crystal
 Pretty.classify("http_request")     # => "HttpRequest"
+```
+
+### `Pretty.date : Time` (aka. `Pretty::Date.parse(args)`)
+
+```crystal
+Pretty.date("2001-02-03") # => 2001-02-03 00:00:00.0 Local
+Pretty.date("1 day ago")  # => 2018-09-08 00:00:00.0 +09:00 Local
+```
+
+### `Pretty.dates : Array(Time)` (aka. `Pretty::Date.parse_dates(args)`)
+
+```crystal
+Pretty.dates("20180901")           # => [Time(20180901)]
+Pretty.dates("20180908-20180909")  # => [Time(20180908),Time(20180909)]
+Pretty.dates("201809").size        # => 30
+Pretty.dates("201801-201802").size # => 59
 ```
 
 ### `Pretty.diff(a, b) : Pretty::Diff`

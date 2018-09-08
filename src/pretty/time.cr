@@ -67,7 +67,7 @@ end
 # ### Usage
 #
 # ```crystal
-# Pretty.parse("2006-01-02 15:04:05")
+# Pretty.time("2006-01-02 15:04:05")
 # ```
 module Pretty
   def self.time(value : String, location : ::Time::Location? = nil) : ::Time
