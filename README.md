@@ -13,6 +13,7 @@ Pretty.underscore("a1Id")              # => "a1_id"
 Pretty.diff(1,2).to_s                  # => "Expected '1', but got '2'"
 Pretty.method(1.5).call("ceil")        # => 2
 Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
+Pretty::Stopwatch.new                  # provides Stopwatch
 ```
 
 #### crystal versions
@@ -33,6 +34,7 @@ Pretty.method(obj : T).call(name : String)
 Pretty.number(n : Int)
 Pretty.underscore(str : String)
 Pretty::Dir.clean(path : String)
+Pretty::Stopwatch.new
 Pretty::Time.parse(value : String)
 ```
 
