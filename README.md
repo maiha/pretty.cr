@@ -11,7 +11,9 @@ Pretty.camelize("http_request")        # => "httpRequest"
 Pretty.classify("http_request")        # => "HttpRequest"
 Pretty.underscore("a1Id")              # => "a1_id"
 Pretty.diff(1,2).to_s                  # => "Expected '1', but got '2'"
+Pretty.mem_info.total.gb               # => 32.939736
 Pretty.method(1.5).call("ceil")        # => 2
+Pretty.process_info.max.mb             # => 3.568
 Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
 Pretty::Stopwatch.new                  # provides Stopwatch
 ```
@@ -30,6 +32,7 @@ Pretty.date(value : String)
 Pretty.error(err : Exception)
 Pretty.json(json : String, color : Bool = false)
 Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
+Pretty.mem_info
 Pretty.method(obj : T).call(name : String)
 Pretty.number(n : Int)
 Pretty.underscore(str : String)
@@ -144,6 +147,18 @@ user     = maiha
 password = 123
 ```
 
+### `Pretty.mem_info : Pretty::MemInfo`
+
+represents memory information in "/proc/meminfo" as `Pretty::MemInfo`
+
+```crystal
+Pretty.mem_info             # => #<Pretty::MemInfo>
+Pretty.mem_info.keys        # => ["MemTotal", "MemFree", ...]
+Pretty.mem_info["MemTotal"] # => Pretty::UsedMemory(@kb=32939736_i64)
+Pretty.mem_info.total       # => Pretty::UsedMemory(@kb=32939736_i64)
+Pretty.mem_info.total.gb    # => 32.939736
+```
+
 ### `Pretty.method(obj : T).call(name : String)`
 
 invoke method by `String`
@@ -155,6 +170,18 @@ Pretty.method([1,2]).call?("xxx") # => nil
 
 ##### **NOTE**
 - works only public methods, not trailing equals, defined in itself not ancestors
+
+### `Pretty.process_info(pid = "self") : Pretty::ProcessInfo`
+
+represents memory information in "/proc/*/status" as `Pretty::MemInfo`
+
+```crystal
+Pretty.process_info           # => #<Pretty::ProcessInfo>
+Pretty.process_info.keys      # => ["VmPeak", "VmSize", ...]
+Pretty.process_info["VmPeak"] # => Pretty::UsedMemory(@kb=92644_i64)
+Pretty.process_info.max.mb    # => 3.568
+Pretty.process_info(1234)     # Error opening file '/proc/1234/status'
+```
 
 ### `Pretty.number(n) : String`
 
