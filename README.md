@@ -16,6 +16,7 @@ Pretty.method(1.5).call("ceil")        # => 2
 Pretty.process_info.max.mb             # => 3.568
 Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
 Pretty::Stopwatch.new                  # provides Stopwatch
+klass A < B                            # class A < B; end
 ```
 
 #### crystal versions
@@ -206,6 +207,25 @@ Pretty.time("2000-01-02")                    # => 2000-01-02 00:00:00 UTC
 Pretty.time("2000-01-02 03:04:05")           # => 2000-01-02 03:04:05 UTC
 Pretty.time("2000-01-02 03:04:05.678")       # => 2000-01-02 03:04:05 UTC
 Pretty.time("2000-01-02T03:04:05.678+09:00") # => 2000-01-02 03:04:05 +0900
+```
+
+### `klass(name, *properties)` macro
+
+`klass` macro provides end-less class definition.
+
+```crystal
+class NotFound < Exception
+  getter name
+
+  def initialize(@name : String)
+  end
+end
+```
+
+This can be shortened as follows.
+
+```crystal
+klass NotFound < Exception, name : String
 ```
 
 ## Development
