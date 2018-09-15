@@ -36,4 +36,12 @@ describe Pretty::Stopwatch do
     watch.count.should eq(1)
     watch.last.count.should eq(1)
   end
+
+  it "provides to_s by delegating to total" do
+    watch = Pretty::Stopwatch.new
+    watch.to_s.should eq(watch.total.to_s)
+
+    watch.measure { "foo" }
+    watch.to_s.should eq(watch.total.to_s)
+  end
 end

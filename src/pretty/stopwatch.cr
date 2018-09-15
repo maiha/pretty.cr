@@ -1,4 +1,6 @@
 class Pretty::Stopwatch
+  delegate to_s, to: total
+
   class Stat
     getter count
     getter sec
