@@ -56,6 +56,10 @@ describe Pretty::Date do
     it "20180901-20180830 # (0 days)" do
       Pretty.dates("20180901-20180830").size.should eq(0)
     end
+
+    it "3 day ago - 1 days ago # (3 days)" do
+      Pretty.dates("3 day ago - 1 days ago").size.should eq(3)
+    end
   end
 
   describe ".parse_dates?" do

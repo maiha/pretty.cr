@@ -56,8 +56,8 @@ module Pretty::Date
       # adjust the end of month for d2
       d2 = d2.at_end_of_month.at_beginning_of_day
     when /^(\d{8})-(\d{8})$/, /^([^-]+)-([^-]+)$/
-      d1 = parse($1)
-      d2 = parse($2)
+      d1 = parse($1.strip)
+      d2 = parse($2.strip)
     when /^(\d{6})$/
       d1 = parse($1)
       d2 = d1.at_end_of_month.at_beginning_of_day
