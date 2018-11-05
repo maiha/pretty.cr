@@ -9,7 +9,7 @@ private macro parse(value, time)
     begin
       exp = {{time}}
       got = Pretty.time({{value}}, location: Time::Location::UTC)
-      if got.epoch_ms == exp.epoch_ms
+      if got == exp
         got.should eq(exp)
       else
         # In error case, print time string rather than epoch itself

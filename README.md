@@ -21,7 +21,7 @@ klass A < B                            # class A < B; end
 
 #### crystal versions
 - v0.5.7 for crystal-0.24 or lower
-- v0.6.x for crystal-0.25, 0.26 or higher
+- v0.6.x for crystal-0.25, 0.26, 0.27 or higher
 
 ## API
 

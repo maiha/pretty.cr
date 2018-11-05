@@ -103,7 +103,7 @@ private def parse(value, exp)
   it value.inspect do
     begin
       got = Pretty::Date.parse(value)
-      if got.epoch_ms == exp.epoch_ms
+      if got == exp
         got.should eq(exp)
       else
         # In error case, print time string rather than epoch itself
@@ -127,7 +127,7 @@ private def parse_dates(value, exp)
   it value.inspect do
     begin
       got = Pretty::Date.parse_dates(value)
-      if got.map(&.epoch_ms) == exp.map(&.epoch_ms)
+      if got == exp
         got.should eq(exp)
       else
         # In error case, print time string rather than epoch itself
