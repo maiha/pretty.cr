@@ -50,6 +50,13 @@ private def mem
     DirectMap4k:      237416 kB
     DirectMap2M:    17588224 kB
     DirectMap1G:    17825792 kB
+
+    VmPeak:    10016 kB
+    VmSize:    10016 kB
+    VmLck:         0 kB
+    VmPin:         0 kB
+    VmHWM:       984 kB
+    VmRSS:       984 kB
     EOF
 end
 
@@ -65,5 +72,11 @@ describe Pretty::MemInfo do
         mem.{{k.id}}?.should eq(mem[{{v}}]?)
       end
     {% end %}
+  end
+
+  describe ".process" do
+    it "returns a MemInfo of current process" do
+      Pretty::MemInfo.process.max.gb.should be_a(Float64)
+    end
   end
 end

@@ -22,6 +22,8 @@ class Pretty::MemInfo
     "total"              => "MemTotal",
     "free"               => "MemFree",
     "available"          => "MemAvailable",
+    "max"                => "VmHWM",
+    
     # general
     "mem_total"          => "MemTotal",
     "mem_free"           => "MemFree",
@@ -107,5 +109,10 @@ class Pretty::MemInfo
 
   def self.host : MemInfo
     load("/proc/meminfo")
+  end
+
+  def self.process(id : Int32? = nil)
+    id = id || "self"
+    load("/proc/#{id}/status")
   end
 end

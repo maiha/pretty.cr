@@ -160,6 +160,11 @@ Pretty.mem_info.total       # => Pretty::UsedMemory(@kb=32939736_i64)
 Pretty.mem_info.total.gb    # => 32.939736
 ```
 
+`Pretty::MemInfo.process` returns a `MemInfo` of current process.
+```crystal
+logger.info "max memory: %s GB" % Pretty::MemInfo.process.max.gb
+```
+
 ### `Pretty.method(obj : T).call(name : String)`
 
 invoke method by `String`
