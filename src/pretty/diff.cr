@@ -68,7 +68,7 @@ class Pretty::Diff
 
     if a.is_a?(Enumerable) && b.is_a?(Enumerable)
       diffs = Array(Diff).new
-      (0...[a.size, b.size].max).to_a.each_with_index do |v i|
+      (0...[a.size, b.size].max).to_a.each_with_index do |v, i|
         entry = diff(a[v]?, b[v]?, value_truncate)
         diffs << entry
       end
