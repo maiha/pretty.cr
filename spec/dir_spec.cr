@@ -7,7 +7,7 @@ end
 describe "Pretty::Dir" do
   describe ".clean(path)" do
     it "mkpath" do
-      FileUtils.rm_rf(tmp_dir)
+      ::Pretty.rm_rf(tmp_dir)
       Dir.exists?(tmp_dir).should be_false
 
       Pretty::Dir.clean(tmp_dir)

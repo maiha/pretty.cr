@@ -96,7 +96,7 @@ end
 
 class Pretty::MemInfo
   def self.load(path : String) : MemInfo
-    parse(File.read(path))
+    parse(::File.read(path))
   end
 
   def self.parse(buffer : String) : MemInfo

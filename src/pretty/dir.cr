@@ -5,13 +5,13 @@
 # ```crystal
 # Pretty::Dir.clean("tmp/test1")
 # ```
-require "file_utils"
+require "./file"
 
 module Pretty
   module Dir
     def self.clean(path : String)
-      FileUtils.rm_rf(path) if File.exists?(path)
-      FileUtils.mkdir_p(path)
+      ::Pretty.rm_rf(path) if ::File.exists?(path)
+      ::Pretty.mkdir_p(path)
     end
   end
 end

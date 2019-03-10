@@ -17,6 +17,9 @@ Pretty.process_info.max.mb             # => 3.568
 Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
 Pretty::Stopwatch.new                  # provides Stopwatch
 klass A < B                            # class A < B; end
+
+include Pretty::File  # provides unix file commands via `FileUtil`
+rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mv, pwd, rm, rm_r, rm_rf, rmdir
 ```
 
 #### crystal versions
