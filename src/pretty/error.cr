@@ -48,7 +48,7 @@ module Pretty
     def self.where?(msg, work_dir : String = APP_ROOT) : String?
       work_dir = work_dir.chomp("/")
 
-      if CRYSTAL_UNDER_024
+      if Crystal.version.minor < 24
         return Error::Backtrace::V023.where?(msg, work_dir)
       else
         return Error::Backtrace::V024.where?(msg, work_dir)

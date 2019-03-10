@@ -77,4 +77,20 @@ module Pretty
   def self.time?(value : String, location : ::Time::Location? = nil) : ::Time?
     Pretty::Time.parse?(value, location: location)
   end
+
+  def self.epoch(seconds : Int) : ::Time
+    {% if ::Crystal::VERSION =~ /^0\.(1\d|2[0-3])\./ %}
+      ::Time.epoch(seconds)
+    {% else %}
+      ::Time.unix(seconds)
+    {% end %}
+  end
+
+  def self.epoch_ms(milliseconds : Int) : ::Time
+    {% if ::Crystal::VERSION =~ /^0\.(1\d|2[0-3])\./ %}
+      ::Time.epoch_ms(milliseconds)
+    {% else %}
+      ::Time.unix_ms(milliseconds)
+    {% end %}
+  end
 end

@@ -7,6 +7,7 @@ Pretty.bytes(123456789)                # => "123 MB"
 Pretty.number(123456789)               # => "123,456,789"
 Pretty.date("2001-02-03")              # => 2001-02-03 00:00:00.0 Local
 Pretty.time("2000-01-02 03:04:05.678") # => 2000-01-02 03:04:05 UTC
+Pretty.epoch(981173106)                # => 2001-02-03 04:05:06 UTC
 Pretty.camelize("http_request")        # => "httpRequest"
 Pretty.classify("http_request")        # => "HttpRequest"
 Pretty.underscore("a1Id")              # => "a1_id"
@@ -14,15 +15,18 @@ Pretty.diff(1,2).to_s                  # => "Expected '1', but got '2'"
 Pretty.mem_info.total.gb               # => 32.939736
 Pretty.method(1.5).call("ceil")        # => 2
 Pretty.process_info.max.mb             # => 3.568
+Pretty.version("0.28.0-dev").minor     # => 28
+Pretty::Crystal.version.minor          # => 27
 Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
 Pretty::Stopwatch.new                  # provides Stopwatch
 klass A < B                            # class A < B; end
 
+# handy linux file operations
 include Pretty::File  # provides unix file commands via `FileUtil`
 rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mv, pwd, rm, rm_r, rm_rf, rmdir
 ```
 
-#### crystal versions
+#### library and crystal versions
 - v0.5.7 for crystal-0.24 or lower
 - v0.6.x for crystal-0.25, 0.26, 0.27 or higher
 
@@ -110,6 +114,18 @@ diff.size # => 1
 diff.to_s # => "Expected '7293', but got '1307'"
 ```
 
+### `Pretty.epoch(str) : Time`
+
+Absorbs the API difference that changes with each release of crystal.
+Personally, `epoch` and `epoch_ms` are the most intuitive.
+
+```crystal
+Pretty.epoch(981173106)       # => 2001-02-03 04:05:06 UTC
+Pretty.epoch_ms(981173106789) # => 2001-02-03 04:05:06.789 UTC
+```
+
+Users can always use this API even if crystal API will be changed again in the future.
+
 ### `Pretty.error(err) : Pretty::Error`
 
 ```crystal
@@ -196,6 +212,23 @@ Pretty.process_info(1234)     # Error opening file '/proc/1234/status'
 
 ```crystal
 Pretty.number(1000000)  # => "1,000,000"
+```
+
+### `Pretty.version(str) : Pretty::Version`
+
+parses numbers separated by dots.
+
+```crystal
+Pretty.version("0.27.2").minor # => 27
+```
+
+This can also sort ip addresses.
+
+```crystal
+hosts  = %w( 192.168.10.1 192.168.0.255 )
+sorted = hosts.map{|s| Pretty.version(s)}.sort
+sorted.map(&.to_s) # => ["192.168.0.255", "192.168.10.1"]
+sorted.map(&.last) # => [255, 1]
 ```
 
 ### `Pretty::Dir.clean(dir)`

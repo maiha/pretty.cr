@@ -96,3 +96,29 @@ describe Pretty::Time do
     end
   end
 end
+
+describe "Pretty.epoch" do
+  it "delegates to Time" do
+    time = Pretty.epoch(981173106)
+    time.year        .should eq(2001)
+    time.month       .should eq(2)
+    time.day         .should eq(3)
+    time.hour        .should eq(4)
+    time.minute      .should eq(5)
+    time.second      .should eq(6)
+    time.millisecond .should eq(0)
+  end
+end
+
+describe "Pretty.epoch_ms" do
+  it "delegates to Time" do
+    time = Pretty.epoch_ms(981173106789)
+    time.year        .should eq(2001)
+    time.month       .should eq(2)
+    time.day         .should eq(3)
+    time.hour        .should eq(4)
+    time.minute      .should eq(5)
+    time.second      .should eq(6)
+    time.millisecond .should eq(789)
+  end
+end
