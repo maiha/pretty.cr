@@ -19,7 +19,6 @@ Pretty.version("0.28.0-dev").minor     # => 28
 Pretty::Crystal.version.minor          # => 27
 Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
 Pretty::Stopwatch.new                  # provides Stopwatch
-klass A < B                            # class A < B; end
 
 # handy linux file operations
 include Pretty::File  # provides unix file commands via `FileUtil`
@@ -29,6 +28,9 @@ rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mv,
 #### library and crystal versions
 - v0.5.7 for crystal-0.24 or lower
 - v0.6.x for crystal-0.25, 0.26, 0.27 or higher
+
+#### breaking changes
+- v0.7.0: drop `klass` macro (Do not define unnecessary macros at the top level)
 
 ## API
 
@@ -248,25 +250,6 @@ Pretty.time("2000-01-02")                    # => 2000-01-02 00:00:00 UTC
 Pretty.time("2000-01-02 03:04:05")           # => 2000-01-02 03:04:05 UTC
 Pretty.time("2000-01-02 03:04:05.678")       # => 2000-01-02 03:04:05 UTC
 Pretty.time("2000-01-02T03:04:05.678+09:00") # => 2000-01-02 03:04:05 +0900
-```
-
-### `klass(name, *properties)` macro
-
-`klass` macro provides end-less class definition.
-
-```crystal
-class NotFound < Exception
-  getter name
-
-  def initialize(@name : String)
-  end
-end
-```
-
-This can be shortened as follows.
-
-```crystal
-klass NotFound < Exception, name : String
 ```
 
 ## Development
