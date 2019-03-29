@@ -66,7 +66,7 @@ end
 
 class Pretty::ProcessInfo
   def self.load(path : String) : ProcessInfo
-    parse(File.read(path))
+    parse(::File.read(path))
   end
 
   def self.parse(buffer : String) : ProcessInfo

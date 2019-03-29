@@ -34,4 +34,10 @@ describe Pretty::ProcessInfo do
       end
     {% end %}
   end
+
+  describe ".max" do
+    it "works" do
+      Pretty.process_info.max
+    end
+  end
 end
