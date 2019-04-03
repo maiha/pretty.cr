@@ -1,7 +1,11 @@
 require "./spec_helper"
 
 private macro utc(*args)
-  Time.new({{*args}}, location: Time::Location::UTC)
+  {% if ::Crystal::VERSION =~ /^0\.(1\d|2[0-7])\./ %}
+    ::Time.new({{*args}}, location: Time::Location::UTC)
+  {% else %}
+    ::Time.utc({{*args}})
+  {% end %}
 end
 
 private macro parse(value, time)
@@ -30,7 +34,9 @@ describe "Pretty.time" do
   parse "2000-01-02 03:04:05Z"    , utc(2000,1,2,3,4,5)
   parse "2000-01-02 03:04:05.678" , utc(2000,1,2,3,4,5) + 678.milliseconds
   parse "2000-01-02 03:04:05.678Z", utc(2000,1,2,3,4,5) + 678.milliseconds
-
+  parse "2000-01-02 03:04:05.000 UTC", utc(2000,1,2,3,4,5)
+  parse "2000-01-02 03:04:05 UTC"    , utc(2000,1,2,3,4,5)
+  
   # Timezone
   parse "2000-01-02T03:04:05Z"          , utc(2000,1,2,3,4,5)
   parse "2000-01-02T03:04:05+0900"      , utc(2000,1,2,3,4,5) - 9.hours
@@ -38,7 +44,11 @@ describe "Pretty.time" do
   parse "2000-01-02 03:04:05 +0900"     , utc(2000,1,2,3,4,5) - 9.hours
   parse "2000-01-02T03:04:05.678+09:00" , utc(2000,1,2,3,4,5) + 678.milliseconds - 9.hours
   parse "2000-01-02T03:04:05.678 +09:00", utc(2000,1,2,3,4,5) + 678.milliseconds - 9.hours
-
+  parse "2000-01-02 03:04:05 +0900 Japan", utc(2000,1,2,3,4,5) - 9.hours  
+  parse "2000-01-02 03:04:05 -03:00 America/Buenos_Aires", (utc(2000,1,2,3,4,5) + 3.hours)
+  parse "2000-01-02 03:04:05.0 +09:00 Asia/Tokyo", utc(2000,1,2,3,4,5) - 9.hours
+  parse "2000-01-02 03:04:05.0 +02:00 Europe/Berlin", utc(2000,1,2,3,4,5) - 2.hours
+  
   # Best effort
   parse "2000-01-02 03:04"        , utc(2000,1,2,3,4,0)
   parse "2000-01-02-03:04"        , utc(2000,1,2,3,4,0)
@@ -72,6 +82,15 @@ describe "Pretty.time?" do
   context "(invalid input)" do
     it "returns nil" do
       Pretty.time?("foo").should eq(nil)
+    end
+  end
+end
+
+describe Pretty do
+  describe ".now" do
+    it "works" do
+      Pretty.now.should be_a(Time)
+      Pretty::Time.now.should be_a(Time)
     end
   end
 end

@@ -26,15 +26,15 @@ module Pretty::Date
   def self.parse(value : String) : ::Time
     case value.delete("/-")
     when /^(\d{4})(\d{2})(\d{2})$/
-      return ::Time.new($1.to_i, $2.to_i, $3.to_i)
+      return Pretty::Time.now($1.to_i, $2.to_i, $3.to_i)
     when /^(\d{4})(\d{2})$/
-      return ::Time.new($1.to_i, $2.to_i, 1)
+      return Pretty::Time.now($1.to_i, $2.to_i, 1)
     when /^\+?(\d+)\s+days?(\s+hence)?$/
       return $1.to_i.day.from_now.at_beginning_of_day
     when /^\+?(\d+)\s+days?\s+ago$/
       return $1.to_i.day.ago.at_beginning_of_day
     when /^now$/
-      return ::Time.now.at_beginning_of_day
+      return Pretty::Time.now.at_beginning_of_day
     when /^yesterday$/
       return 1.day.ago.at_beginning_of_day
     when /^tomorrow$/

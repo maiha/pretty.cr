@@ -41,12 +41,12 @@ class Pretty::Stopwatch
   end
 
   def start
-    @started_at ||= ::Time.now
+    @started_at ||= Time.now
   end
 
   def stop
     if time = @started_at
-      sec = (::Time.now - time).total_seconds
+      sec = (Time.now - time).total_seconds
       @last = Last.new(sec, 1)
       @total << @last
       @started_at = nil

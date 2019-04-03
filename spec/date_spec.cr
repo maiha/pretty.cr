@@ -92,11 +92,11 @@ describe Pretty do
 end
 
 private def time(*args)
-  ::Time.new(*args)
+  Pretty.now(*args)
 end
 
 private def today
-  ::Time.now.at_beginning_of_day
+  Pretty.now.at_beginning_of_day
 end
 
 private def parse(value, exp)

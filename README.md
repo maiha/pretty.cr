@@ -2,6 +2,8 @@
 
 Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 
+For example, `Time.now` does not work with some versions of Crystal, but `Pretty.now` works with all versions!
+
 ```crystal
 Pretty.bytes(123456789)                # => "123 MB"
 Pretty.number(123456789)               # => "123,456,789"
@@ -14,6 +16,7 @@ Pretty.underscore("a1Id")              # => "a1_id"
 Pretty.diff(1,2).to_s                  # => "Expected '1', but got '2'"
 Pretty.mem_info.total.gb               # => 32.939736
 Pretty.method(1.5).call("ceil")        # => 2
+Pretty.now(2000,1,2,3,4,5)             # => 2000-01-02 03:04:05
 Pretty.process_info.max.mb             # => 3.568
 Pretty.version("0.28.0-dev").minor     # => 28
 Pretty::Crystal.version.minor          # => 27
@@ -27,7 +30,7 @@ rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mv,
 
 #### library and crystal versions
 - v0.5.7 for crystal-0.24 or lower
-- v0.6.x for crystal-0.25, 0.26, 0.27 or higher
+- v0.7.2 now supports from 0.25 to 0.28
 
 #### breaking changes
 - v0.7.0: drop `klass` macro (Do not define unnecessary macros at the top level)
