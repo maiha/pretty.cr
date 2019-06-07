@@ -22,4 +22,12 @@ module Pretty
   def self.underscore(str : String)
     str.gsub(/(\d)([A-Z])/){ "#{$1}_#{$2}" }.underscore
   end
+
+  def self.string_width(str : String) : Int32
+    width = 0
+    str.each_char.each do |ch|
+      width += ch.ascii? ? 1 : 2
+    end
+    return width
+  end
 end

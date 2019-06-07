@@ -18,6 +18,7 @@ Pretty.mem_info.total.gb               # => 32.939736
 Pretty.method(1.5).call("ceil")        # => 2
 Pretty.now(2000,1,2,3,4,5)             # => 2000-01-02 03:04:05
 Pretty.process_info.max.mb             # => 3.568
+Pretty.string_width("aあ")             # => 3
 Pretty.version("0.28.0-dev").minor     # => 28
 Pretty::Crystal.version.minor          # => 27
 Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c

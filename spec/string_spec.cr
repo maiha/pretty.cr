@@ -48,3 +48,17 @@ describe "Pretty.underscore" do
   underscore "group12Id" , "group12_id"
   underscore "Group12Id" , "group12_id"
 end
+
+describe "Pretty.string_width" do
+  it "works with ascii string" do
+    Pretty.string_width("abc").should eq 3
+  end
+
+  it "works with multibytes string" do
+    Pretty.string_width("あいう").should eq 6
+  end
+
+  it "works with ascii and multibytes string" do
+    Pretty.string_width("あabいcう").should eq 9
+  end
+end
