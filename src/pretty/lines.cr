@@ -21,10 +21,32 @@ module Pretty
     if lines.empty?
       return ""
     else
-      sample = lines[0]
-      widths = (0...sample.size).map{|i| lines.map(&.[i].size).max}
-      format = widths.map_with_index{|w,i| (i==widths.size-1) ? "%s" : "%-#{w}s"}.join(delimiter)
-      return lines.map{|row| indent + (format % row)}.join("\n")
+      max_item_size = lines.map(&.size).max
+      widths = (0...max_item_size).map{|i|
+        lines.map{|row|
+          if s = row[i]?
+            Pretty.string_width(s)
+          else
+            0
+          end
+        }.max
+      }
+      return String.build do |s|
+        lines.each do |row|
+          s << indent
+          widths.each_with_index do |width, i|
+            v = row[i]? || ""
+            s << v
+            # adjust spaces
+            rest = width - Pretty.string_width(v)
+            if rest > 0
+              s << " " * rest
+            end
+            s << delimiter if i < widths.size - 1
+          end
+          s << "\n"
+        end
+      end.chomp
     end
   end
 end
