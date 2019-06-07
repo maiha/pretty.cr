@@ -45,7 +45,7 @@ Pretty.classify(str : String)
 Pretty.date(value : String)
 Pretty.error(err : Exception)
 Pretty.json(json : String, color : Bool = false)
-Pretty.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "")
+Pretty.lines(lines : Array(Array(String)), headers : Array(String)? = nil, indent : String = "", delimiter : String = "")
 Pretty.mem_info
 Pretty.method(obj : T).call(name : String)
 Pretty.number(n : Int)

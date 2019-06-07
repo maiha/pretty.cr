@@ -17,7 +17,11 @@
 # password = 123
 # ```
 module Pretty
-  def self.lines(lines : Array(Array(String)), indent : String = "", delimiter : String = "") : String
+  def self.lines(lines : Array(Array(String)), headers : Array(String)? = nil, indent : String = "", delimiter : String = "") : String
+    if ary = headers
+      lines = [ary] + lines
+    end
+
     if lines.empty?
       return ""
     else
@@ -31,6 +35,11 @@ module Pretty
           end
         }.max
       }
+
+      if headers
+        lines[1..0] = widths.map{|i| "-"*i}
+      end
+      
       return String.build do |s|
         lines.each do |row|
           s << indent

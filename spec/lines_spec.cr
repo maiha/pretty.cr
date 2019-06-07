@@ -54,4 +54,23 @@ describe "Pretty.lines" do
       Z| 
       EOF
   end
+
+  it "(array) with headers" do
+    headers = ["1","2","3"]
+    array = [
+      ["a","foo", "x"],
+    ]
+    
+    Pretty.lines(array, headers: headers).should eq <<-EOF
+      12  3
+      -----
+      afoox
+      EOF
+    
+    Pretty.lines(array, headers: headers, delimiter: "|").should eq <<-EOF
+      1|2  |3
+      -|---|-
+      a|foo|x
+      EOF
+  end
 end
