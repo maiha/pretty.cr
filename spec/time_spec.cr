@@ -27,7 +27,14 @@ end
 
 describe "Pretty.time" do
   # Date
-  parse "2000-01-02", utc(2000,1,2)
+  it "parse 2000-01-02" do
+    t = Pretty::Time.parse("2000-01-02", ::Time::Location.local)
+    t.year.should eq(2000)
+    t.month.should eq(1)
+    t.day.should eq(2)
+    t.local?.should be_true
+    t.should eq t.at_beginning_of_day
+  end
 
   # Time
   parse "2000-01-02 03:04:05"     , utc(2000,1,2,3,4,5)

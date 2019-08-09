@@ -71,7 +71,7 @@ module Pretty::Time
     {% if ::Crystal::VERSION =~ /^0\.(1\d|2[0-7])\./ %}
       ::Time.new(*args, **options)
     {% else %}
-      ::Time.utc(*args, **options).to_local
+      ::Time.local(*args, **options)
     {% end %}
   end
 
