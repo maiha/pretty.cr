@@ -119,6 +119,21 @@ describe Pretty do
       Pretty.now.should be_a(Time)
       Pretty::Time.now.should be_a(Time)
     end
+
+    it "should be Local time" do
+      Pretty.now.local?.should be_true
+    end
+  end
+
+  describe ".utc" do
+    it "works" do
+      Pretty.utc.should be_a(Time)
+      Pretty::Time.utc.should be_a(Time)
+    end
+
+    it "should be UTC time" do
+      Pretty.utc.utc?.should be_true
+    end
   end
 end
 

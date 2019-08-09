@@ -75,6 +75,16 @@ module Pretty::Time
     {% end %}
   end
 
+  {% if ::Crystal::VERSION =~ /^0\.(1\d|2[0-7])\./ %}
+    def self.utc(year : Int32 = Time.now.year, month : Int32 = Time.now.month, day : Int32 = Time.now.day, hour : Int32 = 0, minute : Int32 = 0, second : Int32 = 0, *, nanosecond : Int32 = 0) : ::Time
+      ::Time.new(year, month, day, hour, minute, second, nanosecond: nanosecond, location: ::Time::Location::UTC)
+    end
+  {% else %}
+    def self.utc(*args, **options) : ::Time
+      ::Time.utc(*args, **options)
+    end
+  {% end %}
+
   def self.parse(year : Int32, month : Int32, day : Int32, hour : Int32 = 0, minute : Int32 = 0, second : Int32 = 0, *args, **opts)
     {% if ::Crystal::VERSION =~ /^0\.(1\d|2[0-7])\./ %}
       ::Time.new(year, month, day, hour, minute, second, *args, **opts)
@@ -94,6 +104,10 @@ end
 module Pretty
   def self.now(*args, **options) : ::Time
     Pretty::Time.now(*args, **options)
+  end
+
+  def self.utc(*args, **options) : ::Time
+    Pretty::Time.utc(*args, **options)
   end
 
   def self.time(value : String, location : ::Time::Location? = nil) : ::Time
