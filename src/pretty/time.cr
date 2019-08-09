@@ -46,14 +46,14 @@ module Pretty::Time
       # "2000-01-02T03:04:05.678"
       # "2000-01-02T03:04:05.678Z"
       # "2000-01-02 03:04:05.000 UTC"
-      location = utc if $2
+      location = utc if $2.to_s != ""
       ::Time.parse(value, "%F#{$1}%T.%L", location)
     when /\A\d{4}-\d{2}-\d{2}([ T])\d{2}:\d{2}:\d{2}(Z?)/
       # "2000-01-02 03:04:05"
       # "2000-01-02T03:04:05"
       # "2000-01-02T03:04:05Z"
       # "2000-01-02 03:04:05 UTC"
-      location = utc if $2
+      location = utc if $2.to_s != ""
       ::Time.parse(value, "%F#{$1}%T", location)
     when /\A(\d{4}-\d{2}-\d{2})\Z/
       # "2000-01-02"

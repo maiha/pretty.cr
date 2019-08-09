@@ -8,6 +8,14 @@ private macro utc(*args)
   {% end %}
 end
 
+private macro local(*args)
+  {% if ::Crystal::VERSION =~ /^0\.(1\d|2[0-7])\./ %}
+    ::Time.new({{*args}})
+  {% else %}
+    ::Time.local({{*args}})
+  {% end %}
+end
+
 private macro parse(value, time)
   it {{value}} do
     begin
@@ -27,14 +35,7 @@ end
 
 describe "Pretty.time" do
   # Date
-  it "parse 2000-01-02" do
-    t = Pretty::Time.parse("2000-01-02", ::Time::Location.local)
-    t.year.should eq(2000)
-    t.month.should eq(1)
-    t.day.should eq(2)
-    t.local?.should be_true
-    t.should eq t.at_beginning_of_day
-  end
+  parse "2000-01-02", utc(2000,1,2)
 
   # Time
   parse "2000-01-02 03:04:05"     , utc(2000,1,2,3,4,5)
@@ -75,6 +76,25 @@ describe "Pretty.time" do
         Pretty.time("foo")
       end
     end
+  end
+end
+
+describe "Pretty.time(local)" do
+  # Date
+  it "parse 2000-01-02" do
+    t = Pretty::Time.parse("2000-01-02", ::Time::Location.local)
+    t.year.should eq(2000)
+    t.month.should eq(1)
+    t.day.should eq(2)
+    t.local?.should be_true
+    t.should eq t.at_beginning_of_day
+  end
+
+  # Time
+  it "parse 2000-01-02 03:04:05" do
+    t = Pretty::Time.parse("2000-01-02 03:04:05", ::Time::Location.local)
+    t.should eq local(2000,1,2,3,4,5)
+    t.local?.should be_true
   end
 end
 
