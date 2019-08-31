@@ -11,21 +11,21 @@ describe "Pretty.lines" do
   it "(array)" do
     Pretty.lines(array).should eq <<-EOF
       user    maiha
-      password123  
+      password123
       EOF
   end
 
   it "(array, delimiter: \" = \")" do
     Pretty.lines(array, delimiter: " = ").should eq <<-EOF
       user     = maiha
-      password = 123  
+      password = 123
       EOF
   end
 
   it "(array, indent: \"> \")" do
     Pretty.lines(array, indent: "> ").should eq <<-EOF
       > user    maiha
-      > password123  
+      > password123
       EOF
   end
 
@@ -36,7 +36,7 @@ describe "Pretty.lines" do
     ]
     
     Pretty.lines(array, delimiter: "|").should eq <<-EOF
-      1 |2 
+      1 |2
       あ|い
       EOF
   end
@@ -49,9 +49,9 @@ describe "Pretty.lines" do
     ]
     
     Pretty.lines(array, delimiter: "|").should eq <<-EOF
-      1| 
+      1|
       a|b
-      Z| 
+      Z|
       EOF
   end
 

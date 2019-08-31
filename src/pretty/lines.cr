@@ -46,12 +46,13 @@ module Pretty
           widths.each_with_index do |width, i|
             v = row[i]? || ""
             s << v
-            # adjust spaces
-            rest = width - Pretty.string_width(v)
-            if rest > 0
-              s << " " * rest
+
+            # adjust spaces only if not last element
+            if i < widths.size - 1
+              rest = width - Pretty.string_width(v)
+              s << " " * rest if rest > 0
+              s << delimiter
             end
-            s << delimiter if i < widths.size - 1
           end
           s << "\n"
         end
