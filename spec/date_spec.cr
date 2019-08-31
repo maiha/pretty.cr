@@ -17,6 +17,7 @@ describe Pretty::Date do
     parse_error "last tomorrow"
     parse_error "next yesterday"
     parse "now", today
+    parse "today", today
     parse_error "tomorrow ago"
     parse_error "tomorrow hence"
     parse "tomorrow", (today + 1.day)

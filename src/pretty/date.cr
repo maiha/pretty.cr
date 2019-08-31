@@ -33,11 +33,11 @@ module Pretty::Date
       return $1.to_i.day.from_now.at_beginning_of_day
     when /^\+?(\d+)\s+days?\s+ago$/
       return $1.to_i.day.ago.at_beginning_of_day
-    when /^now$/
+    when "today", "now"
       return Pretty::Time.now.at_beginning_of_day
-    when /^yesterday$/
+    when "yesterday"
       return 1.day.ago.at_beginning_of_day
-    when /^tomorrow$/
+    when "tomorrow"
       return 1.day.from_now.at_beginning_of_day
     else
       raise ParseError.new(value)
