@@ -69,6 +69,11 @@ describe "Pretty.time" do
   # (like filenames)
   parse "20000102-0304"           , utc(2000,1,2,3,4,0)
   parse "20000102-030405"         , utc(2000,1,2,3,4,5)
+  # (twitter api: statuses/lookup)
+  parse "Feb 02 11:30:14 2016"          , utc(2016,2,2,11,30,14)
+  parse "Feb 02 11:30:14 +0000 2016"    , utc(2016,2,2,11,30,14)
+  parse "Tue Feb 02 11:30:14 2016"      , utc(2016,2,2,11,30,14)
+  parse "Tue Feb 02 11:30:14 +0000 2016", utc(2016,2,2,11,30,14)
 
   context "(invalid input)" do
     it "raises " do
