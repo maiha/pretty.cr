@@ -40,21 +40,24 @@ class Pretty::Stopwatch
     @started_at = nil
   end
 
-  def start
+  def start : Stopwatch
     @started_at ||= Time.now
+    self
   end
 
-  def stop
+  def stop : Stopwatch
     if time = @started_at
       sec = (Time.now - time).total_seconds
       @last = Last.new(sec, 1)
       @total << @last
       @started_at = nil
     end
+    self
   end
 
-  def reset
+  def reset : Stopwatch
     initialize
+    self
   end
   
   def measure

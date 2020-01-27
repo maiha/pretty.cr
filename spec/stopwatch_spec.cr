@@ -1,6 +1,13 @@
 require "./spec_helper"
 
 describe Pretty::Stopwatch do
+  it "returns self (start, stop, reset)" do
+    watch = Pretty::Stopwatch.new
+    watch.start.should eq(watch)
+    watch.stop .should eq(watch)
+    watch.reset.should eq(watch)
+  end
+
   it "provides count, sec and last" do
     watch = Pretty::Stopwatch.new
     watch.count.should eq(0)
