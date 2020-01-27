@@ -1,6 +1,6 @@
 # pretty.cr [![Build Status](https://travis-ci.org/maiha/pretty.cr.svg?branch=master)](https://travis-ci.org/maiha/pretty.cr)
 
-Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
+Something **attentive** and **pretty** stuff for [Crystal](http://crystal-lang.org/).
 
 For example, `Time.now` does not work with some versions of Crystal, but `Pretty.now` works with all versions!
 
@@ -34,7 +34,7 @@ rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mv,
 #### library and crystal versions
 - v0.5.7 for crystal-0.24 or lower
 - v0.7.2 for 0.25 to 0.27
-- v0.7.4 now supports from 0.27 to 0.30
+- v0.7.4 now supports from 0.27 to 0.32.1
 
 #### breaking changes
 - v0.7.4: `Pretty.now` returns Local rather than UTC
@@ -68,7 +68,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   pretty:
     github: maiha/pretty.cr
-    version: 0.7.6
+    version: 0.7.7
 ```
 
 Then require it in your app.
