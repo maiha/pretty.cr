@@ -5,6 +5,7 @@ Something `pretty` stuff for [Crystal](http://crystal-lang.org/).
 For example, `Time.now` does not work with some versions of Crystal, but `Pretty.now` works with all versions!
 
 ```crystal
+Pretty.bar(83,100,width: 20).bar       # => "||||||||||||||||    "
 Pretty.bytes(123456789)                # => "123 MB"
 Pretty.number(123456789)               # => "123,456,789"
 Pretty.date("2001-02-03")              # => 2001-02-03 00:00:00.0 Local
@@ -42,6 +43,7 @@ rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mv,
 ## API
 
 ```crystal
+Pretty.bar(val, max, width, mark, empty)
 Pretty.bytes(value : Int, block = 1000, suffix = "B")
 Pretty.camelize(str : String)
 Pretty.classify(str : String)
@@ -75,6 +77,22 @@ require "pretty"
 ```
 
 ## Usage
+
+### `Pretty.bar(val, max, width, mark, empty)`
+
+```crystal
+vals = [8793, 6917, 5534, 8720]
+vals.each do |v|
+  Pretty.bar(v, max: 10000, width: 20)
+end
+```
+
+```
+[|||||||||||||||||   ]  8793/10000 ( 87%)
+[|||||||||||||       ]  6917/10000 ( 69%)
+[|||||||||||         ]  5534/10000 ( 55%)
+[|||||||||||||||||   ]  8720/10000 ( 87%)
+```
 
 ### `Pretty.bytes(args) : String`
 
