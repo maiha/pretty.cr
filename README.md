@@ -19,6 +19,7 @@ Pretty.mem_info.total.gb               # => 32.939736
 Pretty.method(1.5).call("ceil")        # => 2
 Pretty.now(2000,1,2,3,4,5)             # => 2000-01-02 03:04:05 (Local)
 Pretty.utc(2000,1,2,3,4,5)             # => 2000-01-02 03:04:05 (UTC)
+Pretty.periodical(3.seconds)           # => #<Pretty::Periodical::Executor>
 Pretty.process_info.max.mb             # => 3.568
 Pretty.string_width("aあ")             # => 3
 Pretty.version("0.28.0-dev").minor     # => 28
@@ -54,6 +55,7 @@ Pretty.lines(lines : Array(Array(String)), headers : Array(String)? = nil, inden
 Pretty.mem_info
 Pretty.method(obj : T).call(name : String)
 Pretty.number(n : Int)
+Pretty.periodical(interval : Time::Span)
 Pretty.underscore(str : String)
 Pretty::Dir.clean(path : String)
 Pretty::Stopwatch.new
@@ -222,6 +224,19 @@ Pretty.method([1,2]).call?("xxx") # => nil
 
 ##### **NOTE**
 - works only public methods, not trailing equals, defined in itself not ancestors
+
+### `Pretty.periodical(interval) : Pretty::Periodical::Executor`
+
+This ensures that it is executed only once within the specified time.
+This is useful if you want to write logs regularly.
+
+```crystal
+ctx = Pretty.periodical(3.seconds)
+10000.times do |i|
+  ...
+  ctx.execute { logger.info "#{i} done" } # This will be executed once every 3 seconds.
+end	
+```
 
 ### `Pretty.process_info(pid = "self") : Pretty::ProcessInfo`
 
