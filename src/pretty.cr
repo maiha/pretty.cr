@@ -1,1 +1,2 @@
+require "./ext/*"
 require "./pretty/*"

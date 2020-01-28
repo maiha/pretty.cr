@@ -25,12 +25,16 @@ Pretty.string_width("aあ")             # => 3
 Pretty.version("0.28.0-dev").minor     # => 28
 Pretty::Crystal.version.minor          # => 27
 Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
+Pretty::Logger.new                     # provides composite logger
 Pretty::Stopwatch.new                  # provides Stopwatch
 
 # handy linux file operations
 include Pretty::File  # provides unix file commands via `FileUtil`
 rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mv, pwd, rm, rm_r, rm_rf, rmdir
 ```
+
+#### stdlib pollution
+- `Logger` is extended. See [ext/logger.cr](./ext/logger.cr) for details.
 
 #### library and crystal versions
 - v0.5.7 for crystal-0.24 or lower
@@ -280,6 +284,11 @@ acts same as unix command `rm -rf dir && mkdir -p dir`.
 ```crystal
 Pretty::Dir.clean("tmp/work")
 ```
+
+### `Pretty::Logger`
+
+Port from [CompositeLogger](https://github.com/maiha/composite_logger.cr).
+See above page for details.
 
 ### `Pretty::Time.parse(args) : Time` (aka. `Pretty.time`)
 
