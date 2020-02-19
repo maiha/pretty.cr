@@ -105,13 +105,13 @@ class Logger
   # overwrites stdlib "src/logger.cr"
   def log(severity, message, progname = nil)
     if @io && level_match?(severity)
-      write(severity, Time.local, progname || @progname, message)
+      write(severity, Pretty.now, progname || @progname, message)
     end
   end
 
   def log(severity, progname = nil)
     if @io && level_match?(severity)
-      write(severity, Time.local, progname || @progname, yield)
+      write(severity, Pretty.now, progname || @progname, yield)
     end
   end
 
@@ -124,7 +124,7 @@ class Logger
     when .ge? ; severity >= level
     when .ne? ; severity != level
     else
-      raise NotImplementedError.new("#{level_op.inspect} is not supported yet")
+      raise "#{level_op.inspect} is not supported yet"
     end    
   end
 end

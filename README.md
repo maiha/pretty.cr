@@ -2,7 +2,8 @@
 
 Something **attentive** and **pretty** stuff for [Crystal](http://crystal-lang.org/).
 
-For example, `Time.now` does not work with some versions of Crystal, but `Pretty.now` works with all versions!
+For example, `Time.now` does not work with some versions of Crystal, but `Pretty.now` works on all versions!
+* **supported versions** : 0.27.2 0.31.1 0.32.1 0.33.0
 
 ```crystal
 Pretty.bar(83,100,width: 20).bar       # => "||||||||||||||||    "
@@ -36,10 +37,8 @@ rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mv,
 #### stdlib pollution
 - `Logger` is extended. See [ext/logger.cr](./ext/logger.cr) for details.
 
-#### library and crystal versions
-- v0.5.7 for crystal-0.24 or lower
-- v0.7.2 for 0.25 to 0.27
-- v0.7.4 now supports from 0.27 to 0.32.1
+#### old crystal
+- use v0.5.7 for crystal-0.24 or lower
 
 #### breaking changes
 - v0.7.4: `Pretty.now` returns Local rather than UTC
