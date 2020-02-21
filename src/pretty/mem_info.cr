@@ -15,7 +15,7 @@ def Pretty.mem_info : Pretty::MemInfo
 end
 
 class Pretty::MemInfo
-  delegate keys, to: @values
+  getter values
 
   SHORTCUTS = {
     # special
@@ -74,6 +74,10 @@ class Pretty::MemInfo
   def initialize(@values : Hash(String, Int64))
   end
 
+  def keys
+    values.keys
+  end
+  
   #  MemTotal:       11588840 kB
   def []?(name) : UsedMemory?
     @values[name]?.try{|v| UsedMemory.new(v)}
@@ -94,25 +98,37 @@ class Pretty::MemInfo
   {% end %}
 end
 
-class Pretty::MemInfo
-  def self.load(path : String) : MemInfo
-    parse(::File.read(path))
+module Pretty::MemInfo::Parser
+  def load(path : String, skip_invalid = false)
+    parse(::File.read(path), skip_invalid: skip_invalid)
+  rescue err
+    raise "#{err} (path=#{path})"
   end
 
-  def self.parse(buffer : String) : MemInfo
+  def parse(buffer : String, skip_invalid = false)
     hash = Hash(String, Int64).new
     buffer.scan(/^([^\n]+?):\s+(\d+) kB$/m) do
-      hash[$1] = $2.to_i64
+      if v = $2.to_i64?
+        hash[$1] = v
+      elsif skip_invalid
+        # NOP
+      else
+        raise "non i64 value found: [key=#{$1}, val=#{$2}]"
+      end
     end
     new(hash)
   end
+end
 
-  def self.host : MemInfo
-    load("/proc/meminfo")
+class Pretty::MemInfo
+  extend Pretty::MemInfo::Parser
+
+  def self.host(skip_invalid = false) : MemInfo
+    load("/proc/meminfo", skip_invalid: skip_invalid)
   end
 
-  def self.process(id : Int32? = nil)
+  def self.process(id : Int32? = nil, skip_invalid = false)
     id = id || "self"
-    load("/proc/#{id}/status")
+    load("/proc/#{id}/status", skip_invalid: skip_invalid)
   end
 end

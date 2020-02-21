@@ -65,6 +65,10 @@ describe Pretty::MemInfo do
     mem["MemTotal"].kb.should eq(32939736)
   end
 
+  it "provides keys" do
+    mem.keys.should be_a(Array(String))
+  end
+  
   describe "(shortcuts)" do
     {% for k,v in Pretty::MemInfo::SHORTCUTS %}
       it "provides " + {{k}} do
@@ -77,6 +81,25 @@ describe Pretty::MemInfo do
   describe ".process" do
     it "returns a MemInfo of current process" do
       Pretty::MemInfo.process.max.gb.should be_a(Float64)
+    end
+  end
+
+  describe "(too large number)" do
+    invalid_data = <<-EOF
+      VmExe:        32 kB
+      VmLib: 18446744073709551328 kB
+      EOF
+
+    it "raises in default" do
+      expect_raises(Exception, /VmLib/) do
+        Pretty::MemInfo.parse(invalid_data)
+      end
+    end
+
+    it "skips when skip_invalid" do
+      info = Pretty::MemInfo.parse(invalid_data, skip_invalid: true)
+      info["VmExe"]?.try(&.kb).should eq(32)
+      info["VmLib"]?.should eq nil
     end
   end
 end

@@ -11,8 +11,8 @@
 # Pretty.process_info(1234)     # Error opening file '/proc/1234/status'
 # ```
 
-def Pretty.process_info(pid : Int32? = nil) : Pretty::ProcessInfo
-  Pretty::ProcessInfo.process(pid)
+def Pretty.process_info(pid : Int32? = nil, skip_invalid = false) : Pretty::ProcessInfo
+  Pretty::ProcessInfo.process(pid, skip_invalid: skip_invalid)
 end
 
 class Pretty::ProcessInfo
@@ -65,20 +65,10 @@ class Pretty::ProcessInfo
 end
 
 class Pretty::ProcessInfo
-  def self.load(path : String) : ProcessInfo
-    parse(::File.read(path))
-  end
-
-  def self.parse(buffer : String) : ProcessInfo
-    hash = Hash(String, Int64).new
-    buffer.scan(/^([^\n]+?):\s+(\d+) kB$/m) do
-      hash[$1] = $2.to_i64
-    end
-    new(hash)
-  end
-
-  def self.process(pid : Int32? = nil) : ProcessInfo
+  extend Pretty::MemInfo::Parser
+  
+  def self.process(pid : Int32? = nil, skip_invalid = false) : ProcessInfo
     pid ||= "self"
-    load("/proc/#{pid}/status")
+    load("/proc/#{pid}/status", skip_invalid: skip_invalid)
   end
 end
