@@ -61,7 +61,7 @@ class Logger
               when "progname", "prog"  ; progname
               when "message"           ; message
               when "pid"               ; Process.pid
-              when "mem"               ; Pretty::MemInfo.process.max.to_s rescue "---"
+              when "mem"               ; Pretty::MemInfo.process(skip_invalid: true).max.to_s rescue "---"
               else                     ; "{{#{key}}}"
               end
           if v.is_a?(Time)
