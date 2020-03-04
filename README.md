@@ -28,6 +28,8 @@ Pretty::Crystal.version.minor          # => 27
 Pretty::Dir.clean("a/b/c")             # rm -rf a/b/c && mkdir -p a/b/c
 Pretty::Logger.new                     # provides composite logger
 Pretty::Stopwatch.new                  # provides Stopwatch
+Pretty::URI.escape("%")                # => "%25"
+Pretty::URI.unescape("%25")            # => "%"
 
 # handy linux file operations
 include Pretty::File  # provides unix file commands via `FileUtil`
@@ -63,6 +65,8 @@ Pretty.underscore(str : String)
 Pretty::Dir.clean(path : String)
 Pretty::Stopwatch.new
 Pretty::Time.parse(value : String)
+Pretty::URI.escape(path : String, *args, **opts)
+Pretty::URI.unescape(path : String, *args, **opts)
 ```
 
 ## Installation
