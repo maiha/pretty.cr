@@ -11,6 +11,8 @@ require "file_utils"
 #
 # Pretty::File.write("tmp/foo", "...")
 # Dir.exists?("tmp") # => true
+#
+# Pretty.expand_path("~/")
 # ```
 module Pretty
   module File
@@ -28,6 +30,18 @@ module Pretty
       ::Dir.mkdir_p(::File.dirname(path))
       ::File.write(path, *args, **opts)
     end
+
+    # backward compatibility until 0.31.0 or lower
+    {% if ::Crystal::VERSION =~ /^0\.(1\d|2\d|3[01])\./ %}
+      def expand_path(path, dir = nil) : String
+        ::File.expand_path(path, dir)
+      end
+    {% else %}
+      # 'expand' should expand :)
+      def expand_path(path, dir = nil, *, home = true) : String
+        ::Path.new(path).expand(dir || ::Dir.current, home: home).to_s
+      end
+    {% end %}
 
     extend ::Pretty::File
   end

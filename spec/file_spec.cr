@@ -5,6 +5,12 @@ private def exists_dir_and_file(path : String)
   {Dir.exists?(dir), File.exists?(path)}
 end
 
+private def home
+  home = ENV["HOME"]
+  return home if home == "/"
+  home.chomp('/')
+end
+
 describe Pretty::File do
   describe ".rm_f" do
     it "acts as rm(1)" do
@@ -47,5 +53,12 @@ describe Pretty::File do
       exists_dir_and_file(path).should eq({true, true})
       ::File.read(path).should eq("foo")
     end
+  end
+
+  describe ".expand_path" do
+    it "expands '~'" do
+      Pretty::File.expand_path("~/foo").should eq(File.join(home, "foo"))
+      Pretty.expand_path("~/foo").should eq(File.join(home, "foo"))
+    end    
   end
 end
