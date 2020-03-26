@@ -10,7 +10,10 @@ Since Crystal breaks backward compatibility casually, we need to pay the follow-
 
 ```crystal
 Pretty.bar(83,100,width: 20).bar       # => "||||||||||||||||    "
-Pretty.bytes(123456789)                # => "123 MB"
+Pretty.bytes(123456789).to_s           # => "123 MB"
+Pretty.bytes("12.3GiB").mb             # => 13207.024435
+Pretty.kb(123456789).to_s              # => "123GB"
+Pretty.kib(123456789).to_s             # => "117GiB"
 Pretty.number(123456789)               # => "123,456,789"
 Pretty.date("2001-02-03")              # => 2001-02-03 00:00:00.0 Local
 Pretty.time("2000-01-02 03:04:05.678") # => 2000-01-02 03:04:05 UTC
@@ -59,10 +62,16 @@ Pretty.camelize(str : String)
 Pretty.classify(str : String)
 Pretty.date(value : String)
 Pretty.error(err : Exception)
+Pretty.gb(value : Int)
+Pretty.gib(value : Int)
 Pretty.json(json : String, color : Bool = false)
+Pretty.kb(value : Int)
+Pretty.kib(value : Int)
 Pretty.lines(lines : Array(Array(String)), headers : Array(String)? = nil, indent : String = "", delimiter : String = "")
 Pretty.mem_info
 Pretty.method(obj : T).call(name : String)
+Pretty.mb(value : Int)
+Pretty.mib(value : Int)
 Pretty.number(n : Int)
 Pretty.periodical(interval : Time::Span)
 Pretty.underscore(str : String)
