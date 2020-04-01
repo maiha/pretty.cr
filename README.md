@@ -51,6 +51,7 @@ rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mv,
 - use v0.5.7 for crystal-0.24 or lower
 
 #### breaking changes
+- v0.9.6: `Pretty.bytes` returns `Pretty::Bytes` rather than `String` (use `to_s` for backward compats)
 - v0.7.4: `Pretty.now` returns Local rather than UTC
 - v0.7.0: drop `klass` macro (Do not define unnecessary macros at the top level)
 
@@ -91,7 +92,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   pretty:
     github: maiha/pretty.cr
-    version: 0.9.5
+    version: 0.9.6
 ```
 
 Then require it in your app.
