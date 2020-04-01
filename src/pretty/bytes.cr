@@ -88,11 +88,18 @@ record Pretty::Bytes, bytes : Int64 do
   end
 end
 
+# new format by string
 def Pretty.bytes(s : String)
   Pretty::Bytes.parse(s)
 end
 
-# backward compatibility
+# backward compatibility (old api)
 def Pretty.bytes(v : Int, block = 1000, prefix = " ", suffix = "B")
   Pretty::Bytes.new(v.to_i64).formatter(block: block, prefix: prefix, suffix: suffix)
 end
+
+# backward compatibility (non int)
+def Pretty.bytes(v)
+  Pretty::Bytes.parse(v.to_s)
+end
+

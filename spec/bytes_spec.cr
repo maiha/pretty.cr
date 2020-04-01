@@ -9,6 +9,9 @@ describe "Pretty.bytes" do
     Pretty.bytes(3819).to_s.should eq("3.8 KB")
     Pretty.bytes(103503).to_s.should eq("103 KB")
     Pretty.bytes(12255736).to_s.should eq("12.3 MB")
+
+    # backward compatibility (non int)
+    Pretty.bytes(4567.89).to_s.should eq("4.5KiB")
   end
 
   context "(with block)" do
