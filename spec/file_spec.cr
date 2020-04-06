@@ -1,5 +1,13 @@
 require "./spec_helper"
 
+private macro file_error
+{% if ::Crystal::VERSION =~ /^0\.(1\d|2\d|3[0-3])\./ %}
+  Errno
+{% else %}
+  File::Error
+{% end %}
+end
+
 private def exists_dir_and_file(path : String)
   dir = File.dirname(path)
   {Dir.exists?(dir), File.exists?(path)}
@@ -27,7 +35,7 @@ describe Pretty::File do
       File.exists?(path).should be_false
 
       # raise when dir
-      expect_raises(Errno) do
+      expect_raises(file_error) do
         Pretty.rm_f("tmp/file")
       end
     end
