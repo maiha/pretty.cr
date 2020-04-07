@@ -6,7 +6,7 @@ Since Crystal breaks backward compatibility casually, we need to pay the follow-
 * `Time.now` doesn't exist in recent versions, but `Pretty.now` works on all versions.
 * `File.expand_path` doesn't expand '~' in default in recent versions, but `Pretty.expand_path` works the same for all versions.
 
-**supported versions** : 0.27.2 0.31.1 0.32.1 0.33.0
+**supported versions** : 0.27.2 0.31.1 0.32.1 0.33.0 0.34.0
 
 ```crystal
 Pretty.bar(83,100,width: 20).bar       # => "||||||||||||||||    "
@@ -92,7 +92,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   pretty:
     github: maiha/pretty.cr
-    version: 0.9.6
+    version: 0.9.7
 ```
 
 Then require it in your app.
