@@ -10,6 +10,10 @@
 record Pretty::Bytes, bytes : Int64 do
   def_equals bytes
 
+  def to_i : Int64
+    bytes
+  end
+
   def +(other)
     Bytes.new(bytes + other.bytes)
   end
@@ -40,6 +44,10 @@ record Pretty::Bytes, bytes : Int64 do
   end
   
   record Formatter, bytes : Bytes, block : Int32 = 1000, prefix : String = " ", suffix : String = "B" do
+    def to_i : Int64
+      @bytes.bytes
+    end
+
     def to_s(io : IO)
       bytes = @bytes.bytes.to_f
       block = @block.to_f
@@ -56,6 +64,7 @@ record Pretty::Bytes, bytes : Int64 do
       case num
       when /^\d{3,}/, /^\.0$/
         num = num.sub(/\..+/, "")
+      else
       end
       io << "%s%s%s%s" % [num, prefix, unit, suffix]
     end

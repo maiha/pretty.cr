@@ -4,6 +4,10 @@ require "./spec_helper"
 ### backward compatibility
 
 describe "Pretty.bytes" do
+  it "#to_i" do
+    Pretty.bytes(416).to_i.should eq 416
+  end
+
   it "(with numeric)" do
     Pretty.bytes(416).to_s.should eq("416 B")
     Pretty.bytes(3819).to_s.should eq("3.8 KB")
