@@ -11,6 +11,7 @@
 # df.avail.gib # => 41.0296745300293
 # df.pcent     # => 48
 # df.mount     # => "/"
+# df.cmd       # => "LC_ALL=C df -k /dev/sda1"
 #
 # df = Pretty.df("/dev/sda1", inode: true)
 # ```
@@ -22,8 +23,9 @@ class Pretty::Df
   getter avail
   getter pcent
   getter mount
+  getter cmd
 
-  def initialize(@fs : String, @size : Bytes, @used : Bytes, @avail : Bytes, @pcent : Int32, @mount : String)
+  def initialize(@fs : String, @size : Bytes, @used : Bytes, @avail : Bytes, @pcent : Int32, @mount : String, @cmd : String)
   end
 
   # alias: `avail` is represented as `free` in inode context.
@@ -31,7 +33,7 @@ class Pretty::Df
     avail
   end
 
-  def self.parse(df_output : String)
+  def self.parse(df_output : String, cmd : String = "")
     unit = nil
 
     # [df_output](df -k /)
@@ -87,18 +89,20 @@ class Pretty::Df
     used  = Bytes.parse?("#{used}#{u}")  || raise ArgumentError.new("df: 'Used' is not numeric: #{used}")
     avail = Bytes.parse?("#{avail}#{u}") || raise ArgumentError.new("df: 'Avail' is not numeric: #{avail}")
     pcent = pcent.to_s.sub("%","").to_i32? || raise ArgumentError.new("df: 'Pcent' is not numeric: #{pcent}")
-    return new(fs, size, used, avail, pcent, mount)
+    return new(fs, size, used, avail, pcent, mount, cmd)
   end
 end
 
 def Pretty.df(fs : String, inode : Bool = false) : Pretty::Df
+  env = {"LC_ALL" => "C"}
   args = ["-k", fs]
   args << "-i" if inode
-  proc = Process.new("df", args, env: {"LC_ALL" => "C"}, output: Process::Redirect::Pipe)
+  proc = Process.new("df", args, env: env, output: Process::Redirect::Pipe)
   output = proc.output.gets_to_end
   status = proc.wait
   if status.success?
-    Pretty::Df.parse(output)
+    cmd = (env.map(&.join("=")) + ["df"] + args).join(" ")
+    Pretty::Df.parse(output, cmd)
   else
     raise IO::Error.new("df -k #{fs}")
   end

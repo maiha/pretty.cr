@@ -14,8 +14,8 @@ Pretty.bytes(123456789).to_s           # => "123 MB"
 Pretty.bytes("12.3GiB").mb             # => 13207.024435
 Pretty.kb(123456789).to_s              # => "123GB"
 Pretty.kib(123456789).to_s             # => "117GiB"
-Pretty.df("/dev/sda1").pcent           # => 48
-Pretty.df("/dev/sda1", inode: true)    # => #<Pretty::Df @fs="/dev/sda1", ...>
+Pretty.df("/").pcent                   # => 48
+Pretty.df("/", inode: true).cmd        # => "LC_ALL=C df -k / -i"
 Pretty.number(123456789)               # => "123,456,789"
 Pretty.date("2001-02-03")              # => 2001-02-03 00:00:00.0 Local
 Pretty.time("2000-01-02 03:04:05.678") # => 2000-01-02 03:04:05 UTC

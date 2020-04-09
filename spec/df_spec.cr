@@ -1,5 +1,12 @@
 require "./spec_helper"
 
+private def df_output_sample
+ <<-EOF
+   Filesystem           1K-blocks      Used Available Use% Mounted on
+   overlay              206292664  95883216  99907356  49% /data
+   EOF
+end
+
 describe "Pretty::Df" do
   describe "Pretty.df" do
     it "runs df command" do
@@ -18,6 +25,14 @@ describe "Pretty::Df" do
       expect_raises(IO::Error) do
         Pretty.df("")
       end
+    end
+
+    it "#cmd returns executed command" do
+      df = Pretty.df("/")
+      df.cmd.should eq("LC_ALL=C df -k /")
+
+      df = Pretty.df("/", inode: true)
+      df.cmd.should eq("LC_ALL=C df -k / -i")
     end
   end
 
@@ -64,6 +79,14 @@ describe "Pretty::Df" do
       expect_raises(ArgumentError, /df: no data lines/) do
         Pretty::Df.parse "Filesystem     1K-blocks     Used Available Use% Mounted on"
       end
+    end
+
+    it "#cmd just returns 2nd arg" do
+      df = Pretty::Df.parse(df_output_sample)
+      df.cmd.should eq("")
+
+      df = Pretty::Df.parse(df_output_sample, "foo")
+      df.cmd.should eq("foo")
     end
   end
 end
