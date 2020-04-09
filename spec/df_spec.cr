@@ -3,7 +3,15 @@ require "./spec_helper"
 describe "Pretty::Df" do
   describe "Pretty.df" do
     it "runs df command" do
-      (0..100).should contain(Pretty.df("/").pcent)
+      df1 = Pretty.df("/")
+      df1.pcent.should be >= 0
+    end
+
+    it "inode works" do
+      # Check that disk usage and inode count are different to make sure inode option is working.
+      df1 = Pretty.df("/")
+      df2 = Pretty.df("/", inode: true)
+      df1.free.should_not eq(df2.free)
     end
 
     it "raises IO::Error when failed to execute df(1)" do
@@ -40,18 +48,20 @@ describe "Pretty::Df" do
       df.mount     .should eq("/")
     end
 
+    it "(empty)" do
+      expect_raises(ArgumentError, /df: cannot parse header/) do
+        Pretty::Df.parse ""
+      end
+    end
+
     it "(no headers)" do
-      expect_raises(ArgumentError, /df: no headers/) do
+      expect_raises(ArgumentError, /df: cannot parse header/) do
         Pretty::Df.parse "/dev/vda1       31445996 19735892  11710104  63% /"
       end
     end
 
     it "(no entries)" do
-      expect_raises(ArgumentError, /df: no/) do
-        Pretty::Df.parse ""
-      end
-
-      expect_raises(ArgumentError, /df: no entries/) do
+      expect_raises(ArgumentError, /df: no data lines/) do
         Pretty::Df.parse "Filesystem     1K-blocks     Used Available Use% Mounted on"
       end
     end
