@@ -34,6 +34,11 @@ describe "Pretty::Df" do
       df = Pretty.df("/", inode: true)
       df.cmd.should eq("LC_ALL=C df -k / -i")
     end
+
+    it "#output returns raw output string of df command" do
+      df = Pretty.df("/")
+      df.output.should match(/^Filesystem /)
+    end
   end
 
   describe ".parse" do

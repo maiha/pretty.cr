@@ -12,6 +12,7 @@
 # df.pcent     # => 48
 # df.mount     # => "/"
 # df.cmd       # => "LC_ALL=C df -k /dev/sda1"
+# df.output    # => "Filesystem ..."
 #
 # df = Pretty.df("/dev/sda1", inode: true)
 # ```
@@ -24,8 +25,9 @@ class Pretty::Df
   getter pcent
   getter mount
   getter cmd
+  getter output
 
-  def initialize(@fs : String, @size : Bytes, @used : Bytes, @avail : Bytes, @pcent : Int32, @mount : String, @cmd : String)
+  def initialize(@fs : String, @size : Bytes, @used : Bytes, @avail : Bytes, @pcent : Int32, @mount : String, @cmd : String, @output : String)
   end
 
   # alias: `avail` is represented as `free` in inode context.
@@ -89,7 +91,7 @@ class Pretty::Df
     used  = Bytes.parse?("#{used}#{u}")  || raise ArgumentError.new("df: 'Used' is not numeric: #{used}")
     avail = Bytes.parse?("#{avail}#{u}") || raise ArgumentError.new("df: 'Avail' is not numeric: #{avail}")
     pcent = pcent.to_s.sub("%","").to_i32? || raise ArgumentError.new("df: 'Pcent' is not numeric: #{pcent}")
-    return new(fs, size, used, avail, pcent, mount, cmd)
+    return new(fs, size, used, avail, pcent, mount, cmd, df_output)
   end
 end
 
