@@ -41,6 +41,8 @@ Pretty::Stopwatch.new                  # provides Stopwatch
 Pretty::URI.escape("%")                # => "%25"
 Pretty::URI.unescape("%25")            # => "%"
 
+Pretty::Crontab.parse("*/20 * * * * ls").next_time # => "2019-04-18 08:00"
+
 # handy linux file operations
 include Pretty::File  # provides unix file commands via `FileUtil`
 rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mtime, mv, pwd, rm, rm_r, rm_rf, rmdir
