@@ -19,6 +19,7 @@ Pretty.df("/", inode: true).cmd        # => "LC_ALL=C df -k / -i"
 Pretty.number(123456789)               # => "123,456,789"
 Pretty.date("2001-02-03")              # => 2001-02-03 00:00:00.0 Local
 Pretty.time("2000-01-02 03:04:05.678") # => 2000-01-02 03:04:05 UTC
+Pretty.local_time("2000-01-02")        # => 2000-01-02 00:00:00.0 +09:00 Local
 Pretty.epoch(981173106)                # => 2001-02-03 04:05:06 UTC
 Pretty.camelize("http_request")        # => "httpRequest"
 Pretty.classify("http_request")        # => "HttpRequest"

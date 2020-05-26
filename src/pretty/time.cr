@@ -131,6 +131,14 @@ module Pretty
     Pretty::Time.parse?(value, location: location)
   end
 
+  def self.local_time(value : String) : ::Time
+    Pretty::Time.parse(value, location: ::Time::Location.local)
+  end
+
+  def self.local_time?(value : String) : ::Time?
+    Pretty::Time.parse?(value, location: ::Time::Location.local)
+  end
+
   def self.epoch(seconds : Int) : ::Time
     {% if ::Crystal::VERSION =~ /^0\.(1\d|2[0-3])\./ %}
       ::Time.epoch(seconds)

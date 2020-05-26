@@ -103,6 +103,40 @@ describe "Pretty.time(local)" do
   end
 end
 
+describe "Pretty.local_time(string)" do
+  # Date
+  it "parse 2000-01-02" do
+    t = Pretty.local_time("2000-01-02")
+    t.year.should eq(2000)
+    t.month.should eq(1)
+    t.day.should eq(2)
+    t.local?.should be_true
+    t.should eq t.at_beginning_of_day
+  end
+
+  it "parse (invalid string)" do
+    expect_raises(Pretty::Time::ParseError) do
+      Pretty.local_time("xxx")
+    end
+  end
+end
+
+describe "Pretty.local_time?(string)" do
+  # Date
+  it "parse 2000-01-02" do
+    t = Pretty.local_time?("2000-01-02") || fail "BUG: parse error"
+    t.year.should eq(2000)
+    t.month.should eq(1)
+    t.day.should eq(2)
+    t.local?.should be_true
+    t.should eq t.at_beginning_of_day
+  end
+
+  it "parse (invalid string)" do
+    Pretty.local_time?("xxx").should eq nil
+  end
+end
+
 describe "Pretty.time?" do
   context "(valid input)" do
     it "acts as same as '.time'" do
