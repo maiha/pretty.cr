@@ -42,7 +42,7 @@ Pretty::URI.unescape("%25")            # => "%"
 
 # handy linux file operations
 include Pretty::File  # provides unix file commands via `FileUtil`
-rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mv, pwd, rm, rm_r, rm_rf, rmdir
+rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mtime, mv, pwd, rm, rm_r, rm_rf, rmdir
 ```
 
 #### stdlib pollution

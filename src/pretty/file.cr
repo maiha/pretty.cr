@@ -22,6 +22,10 @@ module Pretty
       end
     {% end %}
 
+    def mtime(path : String)
+      ::File.info(path).modification_time
+    end
+
     def rm_f(path : String)
       ::File.delete(path) if ::File.exists?(path)
     end

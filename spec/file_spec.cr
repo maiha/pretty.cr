@@ -20,6 +20,12 @@ private def home
 end
 
 describe Pretty::File do
+  describe ".mtime" do
+    it "returns ::Time" do
+      Pretty::File.mtime("/").should be_a(::Time)
+    end
+  end
+
   describe ".rm_f" do
     it "acts as rm(1)" do
       path = "tmp/file/foo"
