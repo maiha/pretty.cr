@@ -8,8 +8,8 @@ VERSION=
 CURRENT_VERSION=$(shell git tag -l | sort -V | tail -1 | sed -e 's/^v//')
 GUESSED_VERSION=$(shell git tag -l | sort -V | tail -1 | awk 'BEGIN { FS="." } { $$3++; } { printf "%d.%d.%d", $$1, $$2, $$3 }')
 
-.PHONY : test
-test: check_version_mismatch spec
+.PHONY : ci
+ci: check_version_mismatch spec
 
 .PHONY : spec
 spec:
