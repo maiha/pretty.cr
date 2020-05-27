@@ -3,7 +3,21 @@ require "./spec_helper"
 describe Pretty::Crontab do
   describe "#to_s" do
     it "15 5-21/2 * * * ls" do
-      Pretty::Crontab.parse("15 5-21/2 * * * ls").to_s.should eq("15 5-21/2 * * * ls")
+      Pretty::Crontab.parse("15,30 5-21/2 * * * ls").to_s.should eq("15,30 5-21/2 * * * ls")
+    end
+  end
+
+  describe "#inspect" do
+    it "15,45 5-21/2 * * * ls" do
+      Pretty::Crontab.parse("15,45 5-21/2 * * * ls").inspect.chomp.should eq <<-EOF
+        15,45 5-21/2 * * * ls
+          mins         : [15, 45]
+          hours        : [5, 7, 9, 11, 13, 15, 17, 19, 21]
+          days         : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+          months       : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+          days_of_week : [0, 1, 2, 3, 4, 5, 6]
+          cmd          : "ls"
+        EOF
     end
   end
 

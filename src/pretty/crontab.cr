@@ -38,6 +38,18 @@ class Pretty::Crontab
     io << line
   end
 
+  def inspect(io : IO)
+    io.puts line
+    if !special?
+      io.puts "  mins         : %s" % mins.inspect
+      io.puts "  hours        : %s" % hours.inspect
+      io.puts "  days         : %s" % days.inspect
+      io.puts "  months       : %s" % months.inspect
+      io.puts "  days_of_week : %s" % days_of_week.inspect
+      io.puts "  cmd          : %s" % cmd.inspect
+    end
+  end
+
   def next_time(from : ::Time = Pretty::Time.now) : ::Time
     if sp = special?
       raise Error.new("can't calculate time for special string [@#{sp}]")
