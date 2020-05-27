@@ -145,6 +145,8 @@ class Pretty::Crontab
     days_of_week = parse(dow, all: (0..6))
 
     return new(line, mins, hours, days, months, days_of_week, cmd, special)
+  rescue err : ParseError
+    raise ParseError.new("can't parse #{line.inspect}")
   end
 
   def self.parse(value : String, all : Range(Int32, Int32)) : Array(Int32)
@@ -166,7 +168,7 @@ class Pretty::Crontab
     when /^(\d+)-(\d+)\/(\d+)$/
       return ($1.to_i .. $2.to_i).to_a.select{|v| (v % $3.to_i) == $1.to_i % $3.to_i}
     else
-      raise "crontab: can't parse '#{value}'"
+      raise ParseError.new("can't parse '#{value}'")
     end
   end
 end

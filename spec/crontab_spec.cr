@@ -9,8 +9,14 @@ describe Pretty::Crontab do
 
   describe ".parse" do
     it "(empty string)" do
-      expect_raises Pretty::Crontab::ParseError do
+      expect_raises Pretty::Crontab::ParseError, %(can't parse "") do
         Pretty::Crontab.parse("")
+      end
+    end
+
+    it "(invalid format)" do
+      expect_raises Pretty::Crontab::ParseError, %(can't parse "This is a invalid format") do
+        Pretty::Crontab.parse("This is a invalid format")
       end
     end
 
