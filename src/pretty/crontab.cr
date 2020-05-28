@@ -17,21 +17,22 @@ class Pretty::Crontab
   class Error < Exception; end
   class ParseError < Error; end
   
-  getter line         : String           # => "30 5-21/2 * * * ls /"
-  getter mins         : Array(Int32)     # => [0, 30]
-  getter hours        : Array(Int32)     # => [5,7,9,11,13,15,17,19,21]
-  getter days         : Array(Int32)     # => [1,2,...31]
-  getter months       : Array(Int32)     # => [1,2,...12]
-  getter days_of_week : Array(Int32)     # => [0,1,...6]
-  getter cmd          : String           # => "ls /"
-  getter? special     : String?          # => "reboot"
+  getter line          : String       # => "30 5-21/2 * * * ls /"
+  getter mins          : Array(Int32) # => [0, 30]
+  getter hours         : Array(Int32) # => [5,7,9,11,13,15,17,19,21]
+  getter days          : Array(Int32) # => [1,2,...31]
+  getter months        : Array(Int32) # => [1,2,...12]
+  getter days_of_week  : Array(Int32) # => [0,1,...6]
+  getter time_and_date : String       # => "30 5-21/2 * * *"
+  getter command       : String       # => "ls /"
+  getter? special      : String?      # => "reboot"
 
-  def self.special(name : String, line : String, cmd : String)
+  def self.special(name : String, line : String, time_and_date : String, command : String)
     empty = Array(Int32).new
-    new(line, empty, empty, empty, empty, empty, cmd, name)
+    new(line, empty, empty, empty, empty, empty, time_and_date, command, name)
   end
 
-  def initialize(@line, @mins, @hours, @days, @months, @days_of_week, @cmd, @special)
+  def initialize(@line, @mins, @hours, @days, @months, @days_of_week, @time_and_date, @command, @special)
   end
 
   def to_s(io : IO)
@@ -46,16 +47,19 @@ class Pretty::Crontab
       io.puts "  days         : %s" % days.inspect
       io.puts "  months       : %s" % months.inspect
       io.puts "  days_of_week : %s" % days_of_week.inspect
-      io.puts "  cmd          : %s" % cmd.inspect
+      io.puts "  command      : %s" % command.inspect
     end
   end
 
-  def next_time(from : ::Time = Pretty::Time.now) : ::Time
+  def next_time(from : ::Time? = nil) : ::Time
+    from ||= Pretty::Time.now
+
     if sp = special?
       raise Error.new("can't calculate time for special string [@#{sp}]")
     end
 
-    time = from.dup.to_local
+    # Localize and use minute accuracy
+    time = from.to_local.at_beginning_of_minute
 
     raise Error.new("now supports only '*' for months") if months.size != 12
     raise Error.new("now supports only '*' for days")   if days.size   != 31
@@ -140,7 +144,7 @@ class Pretty::Crontab
       line = "0 * * * * #{$~.post_match}"
     when /^@([a-z]+)\s*/
       # maybe "reboot" or future reserved words
-      return self.special($1, line: line, cmd: $~.post_match.to_s)
+      return self.special($1, line: line, time_and_date: "@#{$1}", command: $~.post_match.to_s)
     else
     end
       
@@ -148,7 +152,8 @@ class Pretty::Crontab
     fields.size >= 5 || raise ParseError.new("crontab expects at least 5 fields, but got #{fields.size} (input: #{line.inspect})")
     
     m, h, dom, mon, dow = fields[0, 5]
-    cmd = fields[5]?.to_s
+    time_and_date = fields[0, 5].join(" ")
+    command       = fields[5]?.to_s
 
     mins         = parse(m  , all: (0..59))
     hours        = parse(h  , all: (0..23))
@@ -156,7 +161,7 @@ class Pretty::Crontab
     months       = parse(mon, all: (1..12))
     days_of_week = parse(dow, all: (0..6))
 
-    return new(line, mins, hours, days, months, days_of_week, cmd, special)
+    return new(line, mins, hours, days, months, days_of_week, time_and_date, command, special)
   rescue err : ParseError
     raise ParseError.new("can't parse #{line.inspect}")
   end
