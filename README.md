@@ -32,6 +32,7 @@ Pretty.now(2000,1,2,3,4,5)             # => 2000-01-02 03:04:05 (Local)
 Pretty.utc(2000,1,2,3,4,5)             # => 2000-01-02 03:04:05 (UTC)
 Pretty.periodical(3.seconds)           # => #<Pretty::Periodical::Executor>
 Pretty.process_info.max.mb             # => 3.568
+Pretty.remove_ansi("foo\e\[0m")        # => "foo"
 Pretty.string_width("aあ")             # => 3
 Pretty.version("0.28.0-dev").minor     # => 28
 Pretty::Crystal.version.minor          # => 27
