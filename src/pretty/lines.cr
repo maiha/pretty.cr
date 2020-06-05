@@ -29,7 +29,7 @@ module Pretty
       widths = (0...max_item_size).map{|i|
         lines.map{|row|
           if s = row[i]?
-            Pretty.string_width(s)
+            Pretty.string_width(Pretty.remove_ansi(s))
           else
             0
           end
@@ -49,7 +49,7 @@ module Pretty
 
             # adjust spaces only if not last element
             if i < widths.size - 1
-              rest = width - Pretty.string_width(v)
+              rest = width - Pretty.string_width(Pretty.remove_ansi(v))
               s << " " * rest if rest > 0
               s << delimiter
             end

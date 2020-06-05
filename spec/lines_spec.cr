@@ -73,4 +73,16 @@ describe "Pretty.lines" do
       a|foo|x
       EOF
   end
+
+  it "supports ansi colors" do
+    array = [
+      ["foo", "bar".colorize(:cyan).to_s],
+      ["hello".colorize(:green).to_s, "world"],
+    ]
+    
+    Pretty.lines(array, delimiter: " ").should eq <<-EOF
+      foo   \e[36mbar\e[0m
+      \e[32mhello\e[0m world
+      EOF
+  end
 end
