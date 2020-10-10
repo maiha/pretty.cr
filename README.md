@@ -1,12 +1,11 @@
 # pretty.cr [![Build Status](https://travis-ci.org/maiha/pretty.cr.svg?branch=master)](https://travis-ci.org/maiha/pretty.cr)
 
-Something **attentive**, **conservative** and **pretty** stuff for [Crystal](http://crystal-lang.org/).
+Something **attentive**, **conservative** and **pretty** stuff with zero dependencies.
+* **tested crystal versions** : See [.travis.yml](./.travis.yml)
 
 Since Crystal breaks backward compatibility casually, we need to pay the follow-up cost for every version upgrade. For example, 
 * `Time.now` doesn't exist in recent versions, but `Pretty.now` works on all versions.
 * `File.expand_path` doesn't expand '~' in default in recent versions, but `Pretty.expand_path` works the same for all versions.
-
-**supported versions** : 0.27.2 0.31.1 0.32.1 0.33.0 0.34.0
 
 ```crystal
 Pretty.bar(83,100,width: 20).bar       # => "||||||||||||||||    "

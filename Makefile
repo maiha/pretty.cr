@@ -1,34 +1,27 @@
+MAKE=make --no-print-directory
 SHELL=/bin/bash
-
-CRYSTAL ?= crystal
-
-SUPPORT_VERSIONS=0.27.2 0.31.1 0.32.1 0.33.0
-
-VERSION=
-CURRENT_VERSION=$(shell git tag -l | sort -V | tail -1 | sed -e 's/^v//')
-GUESSED_VERSION=$(shell git tag -l | sort -V | tail -1 | awk 'BEGIN { FS="." } { $$3++; } { printf "%d.%d.%d", $$1, $$2, $$3 }')
+.SHELLFLAGS = -o pipefail -c
 
 .PHONY : ci
-ci: check_version_mismatch spec
+ci: check_version_mismatch
+	grep -oP 'make test/(.*)' .travis.yml | xargs -P1 -n1 -I{} bash -c "{}"
 
-.PHONY : spec
-spec:
-	$(CRYSTAL) spec -v --fail-fast
+test/%:	shard.lock
+	@echo "----------------------------------------------------------------------"
+	@echo "[$*] CFLAGS: $(CFLAGS)"
+	@echo "----------------------------------------------------------------------"
+	docker run -t -u "`id -u`" -v "`pwd`:/v" -w /v --rm "crystallang/crystal:$*" crystal spec -v $(CFLAGS)
 
-.PHONY: test_backward_compatibility
-test_backward_compatibility:
-	@for ver in $(SUPPORT_VERSIONS); do \
-	  crenv local $$ver; echo $$ver; crystal spec || exit 1; \
-	done
-	@make -s commit_backward_compatibility
-
-.PHONY: commit_backward_compatibility
-commit_backward_compatibility:
-	@sed -i -e 's/^.*supported versions.*$$/* **supported versions** : $(SUPPORT_VERSIONS)/' README.md
+shard.lock: shard.yml
+	shards update
 
 .PHONY : check_version_mismatch
 check_version_mismatch: shard.yml README.md
 	diff -w -c <(grep version: README.md) <(grep ^version: shard.yml)
+
+VERSION=
+CURRENT_VERSION=$(shell git tag -l | sort -V | tail -1 | sed -e 's/^v//')
+GUESSED_VERSION=$(shell git tag -l | sort -V | tail -1 | awk 'BEGIN { FS="." } { $$3++; } { printf "%d.%d.%d", $$1, $$2, $$3 }')
 
 .PHONY : version
 version: README.md
