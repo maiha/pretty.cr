@@ -4,5 +4,8 @@ version: 0.9.11
 authors:
   - maiha <maiha@wota.jp>
 
+dependencies:
+  logger:
+    github: crystal-lang/logger.cr
 
 license: MIT
