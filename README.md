@@ -49,7 +49,7 @@ rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mti
 ```
 
 #### stdlib pollution
-- `Logger` is extended. See [ext/logger.cr](./ext/logger.cr) for details.
+- `Logger` is extended. See [src/pretty/logger/logger.cr](./src/pretty/logger/logger.cr) for details.
 
 #### old crystal
 - use v0.5.7 for crystal-0.24 or lower

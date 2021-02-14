@@ -1,5 +1,7 @@
-require "../spec_helper"
+require "./spec_helper"
 
+require "logger"
+require "../src/pretty/logger/**"
 
 private def messages_in(io : IO::Memory) : Array(String)
   ary = io.to_s.chomp.gsub(/^.*? -- : (.*?)$/m){$1}.split(/\n/)

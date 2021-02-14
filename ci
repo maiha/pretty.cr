@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -eu
+
+# It seems alpine is broken about /proc.
+#       non i64 value found: [key=VmLib, val=18446744073709551452] (path=/proc/self/status) (Exception)
+
+make test/0.27.2
+make test/0.33.0
+make test/0.33.0 TARGET=spec_ext CFLAGS="--warnings=none"
+make test/0.35.1
+make test/0.35.1 TARGET=spec_ext CFLAGS="--warnings=none"
+make test/0.36.1

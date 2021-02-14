@@ -1,3 +1,5 @@
+require "logger"
+
 # Add new features to `Logger`
 # - `formatter=(str : String)` 
 # - `level=(str : String)`
@@ -9,9 +11,6 @@
 # logger.level = "INFO"
 # logger.level # => Logger::Severity::INFO
 # ```
-
-require "logger"
-require "colorize"
 
 class Logger
   property colorize : Bool = false

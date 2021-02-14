@@ -1,7 +1,4 @@
 language: crystal
 sudo: false
 script:
-  - make test/0.27.2
-  - make test/0.33.0
-  - make test/0.34.0 CFLAGS="--warnings=none"
-  - make test/0.35.1 CFLAGS="--warnings=none"
+  - ./ci

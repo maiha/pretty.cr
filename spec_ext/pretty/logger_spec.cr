@@ -1,4 +1,4 @@
-require "./spec_helper"
+require "../spec_helper"
 
 private def messages_in(io : IO::Memory) : Array(String)
   io.to_s.chomp.split(/\n/).map(&.split(/\s+/,2).last)

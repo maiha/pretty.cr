@@ -2,15 +2,17 @@ MAKE=make --no-print-directory
 SHELL=/bin/bash
 .SHELLFLAGS = -o pipefail -c
 
+TARGET=spec
+
 .PHONY : ci
 ci: check_version_mismatch
 	grep -oP 'make test/(.*)' .travis.yml | xargs -P1 -n1 -I{} bash -c "{}"
 
-test/%:	shard.lock
+test/%: shard.lock
 	@echo "----------------------------------------------------------------------"
-	@echo "[$*] CFLAGS: $(CFLAGS)"
+	@echo "[$*] TARGET=$(TARGET) CFLAGS=$(CFLAGS)"
 	@echo "----------------------------------------------------------------------"
-	docker run -t -u "`id -u`" -v "`pwd`:/v" -w /v --rm "crystallang/crystal:$*" crystal spec -v $(CFLAGS)
+	@docker run -t -u "`id -u`" -v "`pwd`:/v" -w /v --rm "crystallang/crystal:$*" crystal spec $(VERBOSE) $(CFLAGS) $(TARGET)
 
 shard.lock: shard.yml
 	shards update
