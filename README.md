@@ -1,7 +1,7 @@
-# pretty.cr [![Build Status](https://travis-ci.org/maiha/pretty.cr.svg?branch=master)](https://travis-ci.org/maiha/pretty.cr)
+# pretty.cr
 
 Something **attentive**, **conservative** and **pretty** stuff with zero dependencies.
-* **tested crystal versions** : See [.travis.yml](./.travis.yml)
+* **tested crystal versions** : See [ci](./ci)
 
 Since Crystal breaks backward compatibility casually, we need to pay the follow-up cost for every version upgrade. For example, 
 * `Time.now` doesn't exist in recent versions, but `Pretty.now` works on all versions.
@@ -96,7 +96,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   pretty:
     github: maiha/pretty.cr
-    version: 1.0.0
+    version: 1.1.1
 ```
 
 Then require it in your app.
@@ -325,8 +325,17 @@ Pretty.time("2000-01-02T03:04:05.678+09:00") # => 2000-01-02 03:04:05 +0900
 
 ## Development
 
-```shell
-make
+```console
+$ make
+```
+
+## CI
+
+Run `make test/x.x.x` to test crystal-x.x.x. And to test all the versions, run `ci`.
+
+```console
+$ make test/1.1.1
+$ ./ci
 ```
 
 ## Contributing
