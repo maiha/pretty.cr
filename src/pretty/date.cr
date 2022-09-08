@@ -8,6 +8,7 @@
 # Pretty::Date.parse("20010203")
 # Pretty::Date.parse("yesterday")
 # Pretty::Date.parse("1 day ago")
+# Pretty::Date.parse("-1d")
 # Pretty::Date.parse?("foo")
 # ```
 module Pretty::Date
@@ -24,6 +25,12 @@ module Pretty::Date
   end
 
   def self.parse(value : String) : ::Time
+    # Convenient with no blank spaces required.
+    case value
+    when /^([+-]?\d+)d$/
+      return Pretty::Time.now.at_beginning_of_day + $1.to_i.days
+    end
+
     case value.delete("/-")
     when /^(\d{4})(\d{2})(\d{2})$/
       return Pretty::Time.now($1.to_i, $2.to_i, $3.to_i)

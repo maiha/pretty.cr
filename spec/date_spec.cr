@@ -22,6 +22,11 @@ describe Pretty::Date do
     parse_error "tomorrow hence"
     parse "tomorrow", (today + 1.day)
     parse "yesterday", (today - 1.day)
+
+    # Convenient with no blank spaces required.
+    parse "3d", (today + 3.day)
+    parse "+3d", (today + 3.day)
+    parse "-3d", (today - 3.day)
   end
 
   describe ".parse?" do
