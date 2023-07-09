@@ -13,4 +13,4 @@ make test/0.35.1 TARGET=spec_ext CFLAGS="--warnings=none"
 make test/0.36.1
 make test/1.0.0
 make test/1.1.1
-make test/1.5.0
+make test/1.8.2
