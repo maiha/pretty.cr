@@ -74,7 +74,8 @@ describe "Pretty.lines" do
       EOF
   end
 
-  it "supports ansi colors" do
+  # TODO: ANSI colors vary by TERM. (#4)
+  pending "supports ansi colors" do
     array = [
       ["foo", "bar".colorize(:cyan).to_s],
       ["hello".colorize(:green).to_s, "world"],
