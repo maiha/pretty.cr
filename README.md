@@ -96,7 +96,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   pretty:
     github: maiha/pretty.cr
-    version: 1.1.2
+    version: 1.1.3
 ```
 
 Then require it in your app.
