@@ -3,7 +3,7 @@
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # df = Pretty.df("/dev/sda1")
 # df.fs        # => "/dev/sda1"
 # df.size.gib  # => 77.48989486694336
@@ -53,7 +53,7 @@ class Pretty::Df
     # The number of lines should be at least 2.
     lines = df_output.strip.split(/\n/)
 
-    ### For the first line (aka. header)
+    # ## For the first line (aka. header)
     line = lines.shift? || raise ArgumentError.new("df: no header lines")
 
     case line
@@ -70,7 +70,7 @@ class Pretty::Df
       raise ArgumentError.new("df: cannot parse header: #{line.inspect}")
     end
 
-    ### For the second line (aka. data)
+    # ## For the second line (aka. data)
     line = lines.shift? || raise ArgumentError.new("df: no data lines")
 
     # (df      ) "/dev/vda1       78G       37G       41G  48%  /"
@@ -79,18 +79,18 @@ class Pretty::Df
     # (df -i -k) "/dev/vda1  10240000    606344   9633656   6%  /"
 
     ary = line.chomp.split(/\s+/)
-    fs    = ary.shift? || raise ArgumentError.new("df: no 'Filesystem' found")
-    size  = ary.shift? || raise ArgumentError.new("df: no 'Size' found")
-    used  = ary.shift? || raise ArgumentError.new("df: no 'Used' found")
+    fs = ary.shift? || raise ArgumentError.new("df: no 'Filesystem' found")
+    size = ary.shift? || raise ArgumentError.new("df: no 'Size' found")
+    used = ary.shift? || raise ArgumentError.new("df: no 'Used' found")
     avail = ary.shift? || raise ArgumentError.new("df: no 'Avail' found")
     pcent = ary.shift? || raise ArgumentError.new("df: no 'Used%' found")
     mount = ary.shift? || raise ArgumentError.new("df: no 'Mounted on' found")
 
     u = unit || raise ArgumentError.new("df: no units [BUG]")
-    size  = Bytes.parse?("#{size}#{u}")  || raise ArgumentError.new("df: 'Size' is not numeric: #{size}")
-    used  = Bytes.parse?("#{used}#{u}")  || raise ArgumentError.new("df: 'Used' is not numeric: #{used}")
+    size = Bytes.parse?("#{size}#{u}") || raise ArgumentError.new("df: 'Size' is not numeric: #{size}")
+    used = Bytes.parse?("#{used}#{u}") || raise ArgumentError.new("df: 'Used' is not numeric: #{used}")
     avail = Bytes.parse?("#{avail}#{u}") || raise ArgumentError.new("df: 'Avail' is not numeric: #{avail}")
-    pcent = pcent.to_s.sub("%","").to_i32? || raise ArgumentError.new("df: 'Pcent' is not numeric: #{pcent}")
+    pcent = pcent.to_s.sub("%", "").to_i32? || raise ArgumentError.new("df: 'Pcent' is not numeric: #{pcent}")
     return new(fs, size, used, avail, pcent, mount, cmd, df_output)
   end
 end

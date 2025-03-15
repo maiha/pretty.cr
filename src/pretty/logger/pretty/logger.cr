@@ -2,10 +2,10 @@ class Pretty::Logger < ::Logger
   include Enumerable(::Logger)
 
   DEFAULT_FORMATTER = "{{mark}},[{{time=%H:%M:%S}}]({{mem}}) {{message}}"
-  
+
   property loggers : Array(::Logger)
   @memory : IO::Memory?
-  
+
   def initialize(loggers : Array(::Logger)? = nil, memory : Logger::Severity | String | Nil = nil, formatter = DEFAULT_FORMATTER)
     @loggers = loggers || Array(::Logger).new
     if memory
@@ -31,12 +31,12 @@ class Pretty::Logger < ::Logger
   def <<(logger : ::Logger)
     @loggers << logger
   end
-  
+
   def <<(hash : Hash)
     self << self.class.build_logger(hash)
   end
-  
-  {% for method in %w( colorize= formatter= level= level_op= ) %}
+
+  {% for method in %w(colorize= formatter= level= level_op=) %}
     def {{method.id}}(v)
       each do |logger|
         logger.{{method.id}}(v)
@@ -44,7 +44,7 @@ class Pretty::Logger < ::Logger
     end
   {% end %}
 
-  {% for method in %w( close ) %}
+  {% for method in %w(close) %}
     def {{method.id}}(*args)
       each do |logger|
         logger.{{method.id}}(*args)
@@ -52,7 +52,7 @@ class Pretty::Logger < ::Logger
     end
   {% end %}
 
-  {% for method in %w( debug info warn error fatal log ) %}
+  {% for method in %w(debug info warn error fatal log) %}
     def {{method.id}}(*args, **options)
       each do |logger|
         logger.{{method.id}}(*args, **options)
@@ -75,9 +75,9 @@ class Pretty::Logger
     path = hash["path"]?.try(&.to_s) || "STDOUT"
     io = {"STDOUT" => STDOUT, "STDERR" => STDERR}[path]? || ::File.open(path, mode)
     logger = ::Logger.new(io)
-    logger.level     = hash["level"].to_s if hash["level"]?
+    logger.level = hash["level"].to_s if hash["level"]?
     logger.formatter = (hash["format"]? || DEFAULT_FORMATTER).to_s
-    logger.colorize  = true if hash["colorize"]?
+    logger.colorize = true if hash["colorize"]?
     logger
   end
 
@@ -94,7 +94,7 @@ class Pretty::Logger
   end
 
   def self.new(loggers : Array(Hash(String, String)), **args) : Pretty::Logger
-    loggers = loggers.map{|hash| build_logger(hash)}
+    loggers = loggers.map { |hash| build_logger(hash) }
     Pretty::Logger.new(loggers, **args)
   end
 end

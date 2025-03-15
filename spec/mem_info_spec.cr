@@ -68,9 +68,9 @@ describe Pretty::MemInfo do
   it "provides keys" do
     mem.keys.should be_a(Array(String))
   end
-  
+
   describe "(shortcuts)" do
-    {% for k,v in Pretty::MemInfo::SHORTCUTS %}
+    {% for k, v in Pretty::MemInfo::SHORTCUTS %}
       it "provides " + {{k}} do
         mem.{{k.id}}.should eq(mem[{{v}}])
         mem.{{k.id}}?.should eq(mem[{{v}}]?)

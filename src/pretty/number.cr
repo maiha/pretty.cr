@@ -2,9 +2,9 @@
 #
 # ### Usage
 #
-# ```crystal
-# Pretty.number(10)       # => "10"
-# Pretty.number(1000000)  # => "1,000,000"
+# ```
+# Pretty.number(10)      # => "10"
+# Pretty.number(1000000) # => "1,000,000"
 # ```
 #
 # ### original code

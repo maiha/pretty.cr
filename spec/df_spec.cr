@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 private def df_output_sample
- <<-EOF
+  <<-EOF
    Filesystem           1K-blocks      Used Available Use% Mounted on
    overlay              206292664  95883216  99907356  49% /data
    EOF
@@ -47,12 +47,12 @@ describe "Pretty::Df" do
         Filesystem           1K-blocks      Used Available Use% Mounted on
         overlay              206292664  95883216  99907356  49% /data
         EOF
-      df.fs        .should eq("overlay")
-      df.size.kib  .should eq(206292664)
-      df.used.kib  .should eq(95883216)
-      df.avail.kib .should eq(99907356)
-      df.pcent     .should eq(49)
-      df.mount     .should eq("/data")
+      df.fs.should eq("overlay")
+      df.size.kib.should eq(206292664)
+      df.used.kib.should eq(95883216)
+      df.avail.kib.should eq(99907356)
+      df.pcent.should eq(49)
+      df.mount.should eq("/data")
     end
 
     it "(CentOS)" do
@@ -60,12 +60,12 @@ describe "Pretty::Df" do
         Filesystem     1K-blocks     Used Available Use% Mounted on
         /dev/vda1       31445996 19735892  11710104  63% /
         EOF
-      df.fs        .should eq("/dev/vda1")
-      df.size.kib  .should eq(31445996)
-      df.used.kib  .should eq(19735892)
-      df.avail.kib .should eq(11710104)
-      df.pcent     .should eq(63)
-      df.mount     .should eq("/")
+      df.fs.should eq("/dev/vda1")
+      df.size.kib.should eq(31445996)
+      df.used.kib.should eq(19735892)
+      df.avail.kib.should eq(11710104)
+      df.pcent.should eq(63)
+      df.mount.should eq("/")
     end
 
     it "(empty)" do

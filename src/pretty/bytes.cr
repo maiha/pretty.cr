@@ -2,7 +2,7 @@
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # Pretty.bytes(416).to_s  # => "416 B"
 # Pretty.bytes(3819).to_s # => "3.8 KB"
 # ```
@@ -18,8 +18,8 @@ record Pretty::Bytes, bytes : Int64 do
     Bytes.new(bytes + other.bytes)
   end
 
-  UNITS_WITH_POWER = {"K"=>1, "M"=>2, "G"=>3, "T"=>4, "P"=>5, "E"=>6, "Z"=>7, "Y"=>8}
-  UNITS = UNITS_WITH_POWER.keys
+  UNITS_WITH_POWER = {"K" => 1, "M" => 2, "G" => 3, "T" => 4, "P" => 5, "E" => 6, "Z" => 7, "Y" => 8}
+  UNITS            = UNITS_WITH_POWER.keys
 
   {% for unit, power in Pretty::Bytes::UNITS_WITH_POWER %}
     def {{unit.downcase.id}}b : Float64
@@ -34,15 +34,15 @@ record Pretty::Bytes, bytes : Int64 do
   def formatter(block = 1024, prefix = "", suffix = "B")
     Formatter.new(self, block: block, prefix: prefix, suffix: suffix)
   end
-  
+
   def to_s(io : IO, **opts)
     formatter(**opts).to_s(io)
   end
-  
+
   def to_s(**opts) : String
     formatter(**opts).to_s
   end
-  
+
   record Formatter, bytes : Bytes, block : Int32 = 1000, prefix : String = " ", suffix : String = "B" do
     def to_i : Int64
       @bytes.bytes
@@ -69,7 +69,7 @@ record Pretty::Bytes, bytes : Int64 do
       io << "%s%s%s%s" % [num, prefix, unit, suffix]
     end
   end
-    
+
   def self.zero
     new(0)
   end
@@ -111,4 +111,3 @@ end
 def Pretty.bytes(v)
   Pretty::Bytes.parse(v.to_s)
 end
-

@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 ######################################################################
-### backward compatibility
+# ## backward compatibility
 
 describe "Pretty.bytes" do
   it "#to_i" do
@@ -40,11 +40,11 @@ describe "Pretty.bytes" do
 end
 
 ######################################################################
-### new string based api
+# ## new string based api
 
 describe "Pretty.bytes" do
   it "parses String" do
-    Pretty.bytes("100" ).to_s.should eq("100B")
+    Pretty.bytes("100").to_s.should eq("100B")
     Pretty.bytes("8000").to_s(block: 1000).should eq("8.0KB")
     Pretty.bytes("8000").to_s.should eq("7.8KiB")
     Pretty.bytes("8K").to_s.should eq("8.0KiB")
@@ -60,12 +60,12 @@ describe "Pretty.bytes" do
     Pretty.bytes("206292664K").to_s(block: 1000).should eq("211GB")
 
     Pretty.bytes("12.3G").bytes.should eq(13207024435)
-    Pretty.bytes("12.3G").kb   .should be_close(13207024.4, 0.1)
-    Pretty.bytes("12.3G").kib  .should be_close(12897484.7, 0.1)
-    Pretty.bytes("12.3G").mb   .should be_close(13207.0   , 0.1)
-    Pretty.bytes("12.3G").mib  .should be_close(12595.1   , 0.1)
-    Pretty.bytes("12.3G").gb   .should be_close(13.2      , 0.1)
-    Pretty.bytes("12.3G").gib  .should be_close(12.3      , 0.1)
-    Pretty.bytes("12.3G").to_s .should eq("12.3GiB")
+    Pretty.bytes("12.3G").kb.should be_close(13207024.4, 0.1)
+    Pretty.bytes("12.3G").kib.should be_close(12897484.7, 0.1)
+    Pretty.bytes("12.3G").mb.should be_close(13207.0, 0.1)
+    Pretty.bytes("12.3G").mib.should be_close(12595.1, 0.1)
+    Pretty.bytes("12.3G").gb.should be_close(13.2, 0.1)
+    Pretty.bytes("12.3G").gib.should be_close(12.3, 0.1)
+    Pretty.bytes("12.3G").to_s.should eq("12.3GiB")
   end
 end

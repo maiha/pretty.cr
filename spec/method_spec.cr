@@ -25,7 +25,7 @@ describe Pretty::Method do
 
   describe "#call" do
     it "invokes instance method by string" do
-      method = Pretty::Method(Array(Int32)).new([1,2,3])
+      method = Pretty::Method(Array(Int32)).new([1, 2, 3])
       method.call("size").should eq 3
     end
 
@@ -39,7 +39,7 @@ describe Pretty::Method do
 
   describe "#call?" do
     it "invokes instance method by string" do
-      method = Pretty::Method(Array(Int32)).new([1,2,3])
+      method = Pretty::Method(Array(Int32)).new([1, 2, 3])
       method.call?("size").should eq 3
     end
 
@@ -55,7 +55,7 @@ describe Pretty::Method do
     end
 
     it "works as well as instance" do
-      Pretty.method([1,2]).call("pop").should eq 2
+      Pretty.method([1, 2]).call("pop").should eq 2
     end
   end
 end

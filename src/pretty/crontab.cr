@@ -2,7 +2,7 @@
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # cron = Pretty::Crontab.parse("*/20 * * * * ls")
 # cron.next_time # => "2019-04-18 08:00"
 # cron.special?  # => nil
@@ -15,17 +15,18 @@
 # m h  dom mon dow   command
 class Pretty::Crontab
   class Error < Exception; end
+
   class ParseError < Error; end
-  
-  getter line          : String       # => "30 5-21/2 * * * ls /"
-  getter mins          : Array(Int32) # => [0, 30]
-  getter hours         : Array(Int32) # => [5,7,9,11,13,15,17,19,21]
-  getter days          : Array(Int32) # => [1,2,...31]
-  getter months        : Array(Int32) # => [1,2,...12]
-  getter days_of_week  : Array(Int32) # => [0,1,...6]
-  getter time_and_date : String       # => "30 5-21/2 * * *"
-  getter command       : String       # => "ls /"
-  getter? special      : String?      # => "reboot"
+
+  getter line : String               # => "30 5-21/2 * * * ls /"
+  getter mins : Array(Int32)         # => [0, 30]
+  getter hours : Array(Int32)        # => [5,7,9,11,13,15,17,19,21]
+  getter days : Array(Int32)         # => [1,2,...31]
+  getter months : Array(Int32)       # => [1,2,...12]
+  getter days_of_week : Array(Int32) # => [0,1,...6]
+  getter time_and_date : String      # => "30 5-21/2 * * *"
+  getter command : String            # => "ls /"
+  getter? special : String?          # => "reboot"
 
   def self.special(name : String, line : String, time_and_date : String, command : String)
     empty = Array(Int32).new
@@ -62,12 +63,12 @@ class Pretty::Crontab
     time = from.to_local.at_beginning_of_minute
 
     raise Error.new("now supports only '*' for months") if months.size != 12
-    raise Error.new("now supports only '*' for days")   if days.size   != 31
+    raise Error.new("now supports only '*' for days") if days.size != 31
 
     today_candidates = create_candidates(time)
 
     if days_of_week.size == 7
-      if found = today_candidates.find{|t| time <= t}
+      if found = today_candidates.find { |t| time <= t }
         return found
       else
         first = today_candidates.first? || raise "BUG: cron contains no data"
@@ -88,13 +89,13 @@ class Pretty::Crontab
       target_dates = target_dates.sort
 
       if target_dates.includes?(today)
-        today_next_time = today_candidates.find{|t| time <= t}
+        today_next_time = today_candidates.find { |t| time <= t }
         return today_next_time if today_next_time
       end
 
-      next_date = target_dates.find{|t| today < t} || raise ParseError.new("cron contains invalid data")
+      next_date = target_dates.find { |t| today < t } || raise ParseError.new("cron contains invalid data")
       next_candidates = create_candidates(next_date)
-      next_time = next_candidates.find{|t| next_date <= t} || raise ParseError.new("cron contains invalid data")
+      next_time = next_candidates.find { |t| next_date <= t } || raise ParseError.new("cron contains invalid data")
       return next_time
     end
   end
@@ -118,7 +119,7 @@ class Pretty::Crontab
 
   def self.parse(line : String) : Crontab
     special = nil
-    entry   = line
+    entry = line
 
     # [CRONTAB(5) in ubuntu-20.04]
     # string         meaning
@@ -147,18 +148,18 @@ class Pretty::Crontab
       return self.special($1, line: line, time_and_date: "@#{$1}", command: $~.post_match.to_s)
     else
     end
-      
+
     fields = line.split(/\s+/, 6)
     fields.size >= 5 || raise ParseError.new("crontab expects at least 5 fields, but got #{fields.size} (input: #{line.inspect})")
-    
+
     m, h, dom, mon, dow = fields[0, 5]
     time_and_date = fields[0, 5].join(" ")
-    command       = fields[5]?.to_s
+    command = fields[5]?.to_s
 
-    mins         = parse(m  , all: (0..59))
-    hours        = parse(h  , all: (0..23))
-    days         = parse(dom, all: (1..31))
-    months       = parse(mon, all: (1..12))
+    mins = parse(m, all: (0..59))
+    hours = parse(h, all: (0..23))
+    days = parse(dom, all: (1..31))
+    months = parse(mon, all: (1..12))
     days_of_week = parse(dow, all: (0..6))
 
     return new(line, mins, hours, days, months, days_of_week, time_and_date, command, special)
@@ -179,11 +180,11 @@ class Pretty::Crontab
       end
       return array.sort.uniq
     when /^\*\/(\d+)$/
-      return all.to_a.select{|v| (v % $1.to_i) == 0}
+      return all.to_a.select { |v| (v % $1.to_i) == 0 }
     when /^(\d+)-(\d+)$/
-      return ($1.to_i .. $2.to_i).to_a
+      return ($1.to_i..$2.to_i).to_a
     when /^(\d+)-(\d+)\/(\d+)$/
-      return ($1.to_i .. $2.to_i).to_a.select{|v| (v % $3.to_i) == $1.to_i % $3.to_i}
+      return ($1.to_i..$2.to_i).to_a.select { |v| (v % $3.to_i) == $1.to_i % $3.to_i }
     else
       raise ParseError.new("can't parse '#{value}'")
     end

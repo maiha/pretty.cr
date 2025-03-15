@@ -46,7 +46,7 @@ describe Pretty::File do
       end
     end
   end
-  
+
   describe ".write" do
     path = "tmp/file/a/b/c/foo.txt"
 
@@ -73,6 +73,6 @@ describe Pretty::File do
     it "expands '~'" do
       Pretty::File.expand_path("~/foo").should eq(File.join(home, "foo"))
       Pretty.expand_path("~/foo").should eq(File.join(home, "foo"))
-    end    
+    end
   end
 end

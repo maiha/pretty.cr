@@ -35,45 +35,45 @@ end
 
 describe "Pretty.time" do
   # Date
-  parse "2000-01-02", utc(2000,1,2)
+  parse "2000-01-02", utc(2000, 1, 2)
 
   # Time
-  parse "2000-01-02 03:04:05"     , utc(2000,1,2,3,4,5)
-  parse "2000-01-02 03:04:05Z"    , utc(2000,1,2,3,4,5)
-  parse "2000-01-02 03:04:05.678" , utc(2000,1,2,3,4,5) + 678.milliseconds
-  parse "2000-01-02 03:04:05.678Z", utc(2000,1,2,3,4,5) + 678.milliseconds
-  parse "2000-01-02 03:04:05.000 UTC", utc(2000,1,2,3,4,5)
-  parse "2000-01-02 03:04:05 UTC"    , utc(2000,1,2,3,4,5)
-  
+  parse "2000-01-02 03:04:05", utc(2000, 1, 2, 3, 4, 5)
+  parse "2000-01-02 03:04:05Z", utc(2000, 1, 2, 3, 4, 5)
+  parse "2000-01-02 03:04:05.678", utc(2000, 1, 2, 3, 4, 5) + 678.milliseconds
+  parse "2000-01-02 03:04:05.678Z", utc(2000, 1, 2, 3, 4, 5) + 678.milliseconds
+  parse "2000-01-02 03:04:05.000 UTC", utc(2000, 1, 2, 3, 4, 5)
+  parse "2000-01-02 03:04:05 UTC", utc(2000, 1, 2, 3, 4, 5)
+
   # Timezone
-  parse "2000-01-02T03:04:05Z"          , utc(2000,1,2,3,4,5)
-  parse "2000-01-02T03:04:05+0900"      , utc(2000,1,2,3,4,5) - 9.hours
-  parse "2000-01-02T03:04:05 +0900"     , utc(2000,1,2,3,4,5) - 9.hours
-  parse "2000-01-02 03:04:05 +0900"     , utc(2000,1,2,3,4,5) - 9.hours
-  parse "2000-01-02T03:04:05.678+09:00" , utc(2000,1,2,3,4,5) + 678.milliseconds - 9.hours
-  parse "2000-01-02T03:04:05.678 +09:00", utc(2000,1,2,3,4,5) + 678.milliseconds - 9.hours
-  parse "2000-01-02 03:04:05 +0900 Japan", utc(2000,1,2,3,4,5) - 9.hours  
-  parse "2000-01-02 03:04:05 -03:00 America/Buenos_Aires", (utc(2000,1,2,3,4,5) + 3.hours)
-  parse "2000-01-02 03:04:05.0 +09:00 Asia/Tokyo", utc(2000,1,2,3,4,5) - 9.hours
-  parse "2000-01-02 03:04:05.0 +02:00 Europe/Berlin", utc(2000,1,2,3,4,5) - 2.hours
-  
+  parse "2000-01-02T03:04:05Z", utc(2000, 1, 2, 3, 4, 5)
+  parse "2000-01-02T03:04:05+0900", utc(2000, 1, 2, 3, 4, 5) - 9.hours
+  parse "2000-01-02T03:04:05 +0900", utc(2000, 1, 2, 3, 4, 5) - 9.hours
+  parse "2000-01-02 03:04:05 +0900", utc(2000, 1, 2, 3, 4, 5) - 9.hours
+  parse "2000-01-02T03:04:05.678+09:00", utc(2000, 1, 2, 3, 4, 5) + 678.milliseconds - 9.hours
+  parse "2000-01-02T03:04:05.678 +09:00", utc(2000, 1, 2, 3, 4, 5) + 678.milliseconds - 9.hours
+  parse "2000-01-02 03:04:05 +0900 Japan", utc(2000, 1, 2, 3, 4, 5) - 9.hours
+  parse "2000-01-02 03:04:05 -03:00 America/Buenos_Aires", (utc(2000, 1, 2, 3, 4, 5) + 3.hours)
+  parse "2000-01-02 03:04:05.0 +09:00 Asia/Tokyo", utc(2000, 1, 2, 3, 4, 5) - 9.hours
+  parse "2000-01-02 03:04:05.0 +02:00 Europe/Berlin", utc(2000, 1, 2, 3, 4, 5) - 2.hours
+
   # Best effort
-  parse "2000-01-02 03:04"        , utc(2000,1,2,3,4,0)
-  parse "2000-01-02-03:04"        , utc(2000,1,2,3,4,0)
-  parse "2000-01-02-03-04"        , utc(2000,1,2,3,4,0)
-  parse "2000-01-02-03:04:05"     , utc(2000,1,2,3,4,5)
-  parse "2000-01-02-03-04-05"     , utc(2000,1,2,3,4,5)
+  parse "2000-01-02 03:04", utc(2000, 1, 2, 3, 4, 0)
+  parse "2000-01-02-03:04", utc(2000, 1, 2, 3, 4, 0)
+  parse "2000-01-02-03-04", utc(2000, 1, 2, 3, 4, 0)
+  parse "2000-01-02-03:04:05", utc(2000, 1, 2, 3, 4, 5)
+  parse "2000-01-02-03-04-05", utc(2000, 1, 2, 3, 4, 5)
   # (some people like this forms)
-  parse "2000/01/02 03:04"        , utc(2000,1,2,3,4,0)
-  parse "2000/01/02 03:04:05"     , utc(2000,1,2,3,4,5)
+  parse "2000/01/02 03:04", utc(2000, 1, 2, 3, 4, 0)
+  parse "2000/01/02 03:04:05", utc(2000, 1, 2, 3, 4, 5)
   # (like filenames)
-  parse "20000102-0304"           , utc(2000,1,2,3,4,0)
-  parse "20000102-030405"         , utc(2000,1,2,3,4,5)
+  parse "20000102-0304", utc(2000, 1, 2, 3, 4, 0)
+  parse "20000102-030405", utc(2000, 1, 2, 3, 4, 5)
   # (twitter api: statuses/lookup)
-  parse "Feb 02 11:30:14 2016"          , utc(2016,2,2,11,30,14)
-  parse "Feb 02 11:30:14 +0000 2016"    , utc(2016,2,2,11,30,14)
-  parse "Tue Feb 02 11:30:14 2016"      , utc(2016,2,2,11,30,14)
-  parse "Tue Feb 02 11:30:14 +0000 2016", utc(2016,2,2,11,30,14)
+  parse "Feb 02 11:30:14 2016", utc(2016, 2, 2, 11, 30, 14)
+  parse "Feb 02 11:30:14 +0000 2016", utc(2016, 2, 2, 11, 30, 14)
+  parse "Tue Feb 02 11:30:14 2016", utc(2016, 2, 2, 11, 30, 14)
+  parse "Tue Feb 02 11:30:14 +0000 2016", utc(2016, 2, 2, 11, 30, 14)
 
   context "(invalid input)" do
     it "raises " do
@@ -98,7 +98,7 @@ describe "Pretty.time(local)" do
   # Time
   it "parse 2000-01-02 03:04:05" do
     t = Pretty::Time.parse("2000-01-02 03:04:05", ::Time::Location.local)
-    t.should eq local(2000,1,2,3,4,5)
+    t.should eq local(2000, 1, 2, 3, 4, 5)
     t.local?.should be_true
   end
 end
@@ -200,25 +200,25 @@ end
 describe "Pretty.epoch" do
   it "delegates to Time" do
     time = Pretty.epoch(981173106)
-    time.year        .should eq(2001)
-    time.month       .should eq(2)
-    time.day         .should eq(3)
-    time.hour        .should eq(4)
-    time.minute      .should eq(5)
-    time.second      .should eq(6)
-    time.millisecond .should eq(0)
+    time.year.should eq(2001)
+    time.month.should eq(2)
+    time.day.should eq(3)
+    time.hour.should eq(4)
+    time.minute.should eq(5)
+    time.second.should eq(6)
+    time.millisecond.should eq(0)
   end
 end
 
 describe "Pretty.epoch_ms" do
   it "delegates to Time" do
     time = Pretty.epoch_ms(981173106789)
-    time.year        .should eq(2001)
-    time.month       .should eq(2)
-    time.day         .should eq(3)
-    time.hour        .should eq(4)
-    time.minute      .should eq(5)
-    time.second      .should eq(6)
-    time.millisecond .should eq(789)
+    time.year.should eq(2001)
+    time.month.should eq(2)
+    time.day.should eq(3)
+    time.hour.should eq(4)
+    time.minute.should eq(5)
+    time.second.should eq(6)
+    time.millisecond.should eq(789)
   end
 end

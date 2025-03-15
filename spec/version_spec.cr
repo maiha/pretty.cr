@@ -11,9 +11,9 @@ end
 
 describe Pretty::Version do
   describe ".parse" do
-    parse "0.28.0-dev", [0,28,0],"dev"
-    parse "0.27.2"    , [0,27,2],""
-    parse "1.2.3.4"   , [1,2,3,4],""
+    parse "0.28.0-dev", [0, 28, 0], "dev"
+    parse "0.27.2", [0, 27, 2], ""
+    parse "1.2.3.4", [1, 2, 3, 4], ""
 
     it "raises ArgumentError when invalid format is given" do
       expect_raises(ArgumentError) do
@@ -23,14 +23,14 @@ describe Pretty::Version do
   end
 
   it "acts as array" do
-    Pretty::Version.parse("0.27.2")[1,2].should eq([27,2])
+    Pretty::Version.parse("0.27.2")[1, 2].should eq([27, 2])
   end
 
   it "provides general versioning names" do
     version = Pretty::Version.parse("0.27.2-dev")
     version.major.should eq(0)
     version.minor.should eq(27)
-    version.rev  .should eq(2)
+    version.rev.should eq(2)
     version.build.should eq("dev")
   end
 

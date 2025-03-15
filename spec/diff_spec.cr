@@ -1,51 +1,51 @@
 require "./spec_helper"
 
-private macro diff(a,b)
+private macro diff(a, b)
   Pretty.diff({{a}}, {{b}})
 end
 
 describe "Pretty.diff" do
   it "returns a Pretty::Diff" do
-    diff(1,2).should be_a(Pretty::Diff)
+    diff(1, 2).should be_a(Pretty::Diff)
   end
 
   context "(equal objects)" do
     it "#size returns 0" do
-      diff(nil,nil).size.should eq(0)
-      diff(1,1).size.should eq(0)
-      diff(["a"],["a"]).size.should eq(0)
+      diff(nil, nil).size.should eq(0)
+      diff(1, 1).size.should eq(0)
+      diff(["a"], ["a"]).size.should eq(0)
     end
   end
 
   context "(type mismatch)" do
     it "#size returns 1" do
-      diff(1,nil).size.should eq(1)
+      diff(1, nil).size.should eq(1)
       diff(1, "a").size.should eq(1)
       diff(1, ["a"]).size.should eq(1)
     end
 
     it "#to_s shows type info" do
-      diff(1,nil).to_s.should eq("Expected 'Int32', but got 'Nil'")
+      diff(1, nil).to_s.should eq("Expected 'Int32', but got 'Nil'")
     end
   end
 
   context "(value mismatch)" do
     it "#size returns 1" do
-      diff(true,false).size.should eq(1)
-      diff(1,2).size.should eq(1)
+      diff(true, false).size.should eq(1)
+      diff(1, 2).size.should eq(1)
       diff("a", "b").size.should eq(1)
     end
 
     it "#to_s shows value info" do
-      diff(1,2).to_s.should eq("Expected '1', but got '2'")
+      diff(1, 2).to_s.should eq("Expected '1', but got '2'")
     end
   end
 
   context "(value mismatch with enumerable)" do
     describe "#size" do
       it "returns the number of different elements" do
-        diff([1], [1,2]).size.should eq(1)
-        diff([1], [0,2]).size.should eq(2)
+        diff([1], [1, 2]).size.should eq(1)
+        diff([1], [0, 2]).size.should eq(2)
         diff([] of Int32, (1..5).to_a).size.should eq(5)
       end
     end

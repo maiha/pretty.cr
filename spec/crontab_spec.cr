@@ -50,7 +50,7 @@ describe Pretty::Crontab do
         cron.next_time
       end
     end
-    
+
     it "* * * * *" do
       cron = Pretty::Crontab.parse("* * * * *")
       base = Pretty.local_time("2000-01-02 03:04")

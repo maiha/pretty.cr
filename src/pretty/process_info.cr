@@ -3,7 +3,7 @@
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # Pretty.process_info           # => #<Pretty::ProcessInfo>
 # Pretty.process_info.keys      # => ["VmPeak", "VmSize", ...]
 # Pretty.process_info["VmPeak"] # => Pretty::UsedMemory(@kb=92644_i64)
@@ -20,8 +20,8 @@ class Pretty::ProcessInfo
 
   SHORTCUTS = {
     # special
-    "max"           => "VmHWM",
-    "peak"          => "VmPeak",
+    "max"  => "VmHWM",
+    "peak" => "VmPeak",
     # general
     "vm_peak"       => "VmPeak",
     "vm_size"       => "VmSize",
@@ -46,14 +46,14 @@ class Pretty::ProcessInfo
 
   # VmPeak:	    7344 kB
   def []?(name) : UsedMemory?
-    @values[name]?.try{|v| UsedMemory.new(v)}
+    @values[name]?.try { |v| UsedMemory.new(v) }
   end
 
   def [](name) : UsedMemory
     self[name]? || raise ArgumentError.new("ProcessInfo[#{name}] not found")
   end
 
-  {% for k,v in SHORTCUTS %}
+  {% for k, v in SHORTCUTS %}
     def {{k.id}}
       self[{{v}}]
     end
@@ -66,7 +66,7 @@ end
 
 class Pretty::ProcessInfo
   extend Pretty::MemInfo::Parser
-  
+
   def self.process(pid : Int32? = nil, skip_invalid = false) : ProcessInfo
     pid ||= "self"
     load("/proc/#{pid}/status", skip_invalid: skip_invalid)

@@ -3,7 +3,7 @@
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # Pretty.mem_info             # => #<Pretty::MemInfo>
 # Pretty.mem_info.keys        # => ["MemTotal", "MemFree", ...]
 # Pretty.mem_info["MemTotal"] # => Pretty::UsedMemory(@kb=32939736_i64)
@@ -19,11 +19,11 @@ class Pretty::MemInfo
 
   SHORTCUTS = {
     # special
-    "total"              => "MemTotal",
-    "free"               => "MemFree",
-    "available"          => "MemAvailable",
-    "max"                => "VmHWM",
-    
+    "total"     => "MemTotal",
+    "free"      => "MemFree",
+    "available" => "MemAvailable",
+    "max"       => "VmHWM",
+
     # general
     "mem_total"          => "MemTotal",
     "mem_free"           => "MemFree",
@@ -77,17 +77,17 @@ class Pretty::MemInfo
   def keys
     values.keys
   end
-  
+
   #  MemTotal:       11588840 kB
   def []?(name) : UsedMemory?
-    @values[name]?.try{|v| UsedMemory.new(v)}
+    @values[name]?.try { |v| UsedMemory.new(v) }
   end
 
   def [](name) : UsedMemory
     self[name]? || raise ArgumentError.new("MemInfo[#{name}] not found")
   end
 
-  {% for k,v in SHORTCUTS %}
+  {% for k, v in SHORTCUTS %}
     def {{k.id}}
       self[{{v}}]
     end

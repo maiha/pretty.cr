@@ -1,6 +1,6 @@
 # Load individually because of dependencies and usage conditions.
 
-require "./pretty/time"         # Pretty::Time.now is special
+require "./pretty/time" # Pretty::Time.now is special
 
 require "./pretty/ansi"
 require "./pretty/bar"
