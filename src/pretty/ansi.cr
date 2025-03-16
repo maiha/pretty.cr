@@ -1,5 +1,5 @@
 module Pretty::Ansi
-  # ```crystal
+  # ```
   # Pretty.remove_ansi("foo".colorize(:green)) # => "foo"
   # ```
   def remove_ansi(v)

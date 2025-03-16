@@ -1,10 +1,10 @@
 require "logger"
 
 # Add new features to `Logger`
-# - `formatter=(str : String)` 
+# - `formatter=(str : String)`
 # - `level=(str : String)`
 #
-# ```crystal
+# ```
 # logger.formatter = "{{mark}}, [{{time=%H:%M}}] {{prog=[%s] }}{{message}}"
 # logger.info "foo", "main" # => "I, 23:57 [main] foo"
 #
@@ -36,7 +36,7 @@ class Logger
         raise ArgumentError.new("unknown level op: #{op.inspect}")
       end
     end
-  end    
+  end
 
   property level_op : LevelOp = LevelOp::GE
 
@@ -54,14 +54,14 @@ class Logger
         fmt = $2.empty? ? nil : $2
         begin
           v = case key
-              when "mark"              ; severity.to_s[0]
-              when "severity", "level" ; severity
-              when "datetime", "time"  ; datetime
-              when "progname", "prog"  ; progname
-              when "message"           ; message
-              when "pid"               ; Process.pid
-              when "mem"               ; Pretty::MemInfo.process(skip_invalid: true).max.to_s rescue "---"
-              else                     ; "{{#{key}}}"
+              when "mark"             ; severity.to_s[0]
+              when "severity", "level"; severity
+              when "datetime", "time" ; datetime
+              when "progname", "prog" ; progname
+              when "message"          ; message
+              when "pid"              ; Process.pid
+              when "mem"              ; Pretty::MemInfo.process(skip_invalid: true).max.to_s rescue "---"
+              else                      "{{#{key}}}"
               end
           if v.is_a?(Time)
             fmt ? v.to_s(fmt) : v.to_s
@@ -108,7 +108,7 @@ class Logger
     end
   end
 
-  def log(severity, progname = nil)
+  def log(severity, progname = nil, &)
     if @io && level_match?(severity)
       write(severity, Pretty.now, progname || @progname, yield)
     end
@@ -116,14 +116,14 @@ class Logger
 
   def level_match?(severity : Severity) : Bool
     case level_op
-    when .lt? ; severity <  level
-    when .le? ; severity <= level
-    when .eq? ; severity == level
-    when .gt? ; severity >  level
-    when .ge? ; severity >= level
-    when .ne? ; severity != level
+    when .lt?; severity < level
+    when .le?; severity <= level
+    when .eq?; severity == level
+    when .gt?; severity > level
+    when .ge?; severity >= level
+    when .ne?; severity != level
     else
       raise "#{level_op.inspect} is not supported yet"
-    end    
+    end
   end
 end

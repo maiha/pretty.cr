@@ -1,6 +1,6 @@
 # `Pretty::Bar` builds Ascii-art bar string for the `val` and `max`
 #
-# ```crystal
+# ```
 # bar = Pretty::Bar.new(val: 43, max: 176, width: 30)
 # bar.val   # => 43
 # bar.val_s # => " 43/176"
@@ -26,11 +26,11 @@ class Pretty::Bar
 
   # => "|||||||                       "
   def bar
-    mark_width  = width_for(val)
+    mark_width = width_for(val)
     empty_width = width - mark_width
-    
+
     String.build do |s|
-      s << mark  * mark_width
+      s << mark * mark_width
       s << empty * empty_width
     end
   end
@@ -40,10 +40,10 @@ class Pretty::Bar
     return 0 if max == 0
 
     case v = val * 100.0 / max
-    when        0 ; 0
-    when  0...  1 ; 1
-    when 99...100 ; 99
-    else          ; v.trunc.to_i32
+    when 0       ; 0
+    when 0...1   ; 1
+    when 99...100; 99
+    else           v.trunc.to_i32
     end
   end
 
@@ -62,7 +62,7 @@ class Pretty::Bar
   def to_s(io : IO)
     io << "[#{bar}] #{val_s} (#{pct_s})"
   end
-  
+
   private def width_for(v : Int32) : Int32
     return 0 if max == 0
     w = v.to_f * width / max

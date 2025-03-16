@@ -23,8 +23,8 @@ describe "Pretty.camelize" do
   camelize "Foo", "foo"
 
   camelize "http_request", "httpRequest"
-  camelize "httpRequest" , "httpRequest"
-  camelize "HttpRequest" , "httpRequest"
+  camelize "httpRequest", "httpRequest"
+  camelize "HttpRequest", "httpRequest"
 end
 
 describe "Pretty.classify" do
@@ -32,8 +32,8 @@ describe "Pretty.classify" do
   classify "Foo", "Foo"
 
   classify "http_request", "HttpRequest"
-  classify "httpRequest" , "HttpRequest"
-  classify "HttpRequest" , "HttpRequest"
+  classify "httpRequest", "HttpRequest"
+  classify "HttpRequest", "HttpRequest"
 end
 
 describe "Pretty.underscore" do
@@ -41,12 +41,12 @@ describe "Pretty.underscore" do
   underscore "Foo", "foo"
 
   underscore "http_request", "http_request"
-  underscore "httpRequest" , "http_request"
-  underscore "HttpRequest" , "http_request"
+  underscore "httpRequest", "http_request"
+  underscore "HttpRequest", "http_request"
 
-  underscore "group12id" , "group12id"
-  underscore "group12Id" , "group12_id"
-  underscore "Group12Id" , "group12_id"
+  underscore "group12id", "group12id"
+  underscore "group12Id", "group12_id"
+  underscore "Group12Id", "group12_id"
 end
 
 describe "Pretty.string_width" do

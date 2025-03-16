@@ -3,9 +3,9 @@ require "./spec_helper"
 describe Pretty::Date do
   describe ".parse" do
     # YMD
-    parse "2001-02-03", time(2001,2,3)
-    parse "2001/02/03", time(2001,2,3)
-    parse "20010203"  , time(2001,2,3)
+    parse "2001-02-03", time(2001, 2, 3)
+    parse "2001/02/03", time(2001, 2, 3)
+    parse "20010203", time(2001, 2, 3)
 
     # Like "date -d ..." in "coreutils/gnulib-tests/test-parse-datetime.c"
     parse "+1 day", (today + 1.day)
@@ -31,7 +31,7 @@ describe Pretty::Date do
 
   describe ".parse?" do
     it "acts same as parse for success cases" do
-      Pretty::Date.parse?("2001-02-03").should eq(time(2001,2,3))
+      Pretty::Date.parse?("2001-02-03").should eq(time(2001, 2, 3))
     end
 
     it "returns nil for failure cases" do
@@ -40,8 +40,8 @@ describe Pretty::Date do
   end
 
   describe ".parse_dates" do
-    parse_dates "20180901", [time(2018,9,1)]
-    parse_dates "20180908-20180909", [time(2018,9,8), time(2018,9,9)]
+    parse_dates "20180901", [time(2018, 9, 1)]
+    parse_dates "20180908-20180909", [time(2018, 9, 8), time(2018, 9, 9)]
 
     it "20180830-20180902" do
       Pretty.dates("20180830-20180902").map(&.to_s("%Y%m%d")).should eq(["20180830", "20180831", "20180901", "20180902"])
@@ -70,7 +70,7 @@ describe Pretty::Date do
 
   describe ".parse_dates?" do
     it "acts same as parse_dates for success cases" do
-      Pretty::Date.parse_dates?("20010203").should eq([time(2001,2,3)])
+      Pretty::Date.parse_dates?("20010203").should eq([time(2001, 2, 3)])
     end
 
     it "returns nil for failure cases" do

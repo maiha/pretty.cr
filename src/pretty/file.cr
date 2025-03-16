@@ -6,7 +6,7 @@ require "file_utils"
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # Pretty::File.rm_f("tmp/foo")
 #
 # Pretty::File.write("tmp/foo", "...")

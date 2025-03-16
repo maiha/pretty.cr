@@ -3,9 +3,9 @@
 #
 # ### Usage
 #
-# ```crystal
-# err.backtrace            # => ["0x48df77: *CallStack::unwind:Array(Pointer(Void))
-# Pretty.error(err).where  # => "mysql at src/commands/db.cr 20:3"
+# ```
+# err.backtrace           # => ["0x48df77: *CallStack::unwind:Array(Pointer(Void))
+# Pretty.error(err).where # => "mysql at src/commands/db.cr 20:3"
 # ```
 module Pretty
   def self.error(err : Exception)
@@ -25,7 +25,7 @@ module Pretty
         io << "\n" << w
       end
     end
-  
+
     def where?
       self.class.where?(backtrace)
     end
@@ -33,7 +33,7 @@ module Pretty
     def where
       where? || ""
     end
-  
+
     def backtrace : String
       String.build do |io|
         @err.inspect_with_backtrace(io)
@@ -45,6 +45,7 @@ end
 module Pretty
   class Error
     APP_ROOT = {{ env("PWD") }}
+
     def self.where?(msg, work_dir : String = APP_ROOT) : String?
       work_dir = work_dir.chomp("/")
 
@@ -70,14 +71,14 @@ module Pretty
       # 0x582604: foo at /home/maiha/pretty.cr/spec/error_spec.cr 5:5
       # 0x4af5e1: ~procProc(Nil) at /data/crystal/0.23.1/src/kernel.cr 76:3
       msg.scan(/^0x[0-9a-f]+:([^\n]+?) at (\/[^\n]+?)$/m) do |m|
-        why  = m[1].to_s.strip
+        why = m[1].to_s.strip
         path = m[2].to_s.strip
         case path
         when SHARD_RE # ignore
         when CRENV_RE # ignore
         else
           if !work_dir.empty? && path.starts_with?(work_dir)
-            path = path[(work_dir.size+1) .. -1]
+            path = path[(work_dir.size + 1)..-1]
           end
           return "#{why} at #{path}"
         end
@@ -96,13 +97,13 @@ module Pretty
 
       msg.scan(/^\s*from (\S+?) in (\S+?)$/m) do |m|
         path = m[1].to_s.strip
-        why  = m[2].to_s.strip
+        why = m[2].to_s.strip
         case path
         when SHARD_RE # ignore
         when CRENV_RE # ignore
         else
           if !work_dir.empty? && path.starts_with?(work_dir)
-            path = path[(work_dir.size+1) .. -1]
+            path = path[(work_dir.size + 1)..-1]
           end
           return "#{why} at #{path}"
         end

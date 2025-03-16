@@ -2,7 +2,7 @@
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # lines = [
 #   ["user", "maiha"],
 #   ["password", "123"],
@@ -13,7 +13,7 @@
 # prints
 #
 # ```
-# user     = maiha
+# user = maiha
 # password = 123
 # ```
 module Pretty
@@ -26,8 +26,8 @@ module Pretty
       return ""
     else
       max_item_size = lines.map(&.size).max
-      widths = (0...max_item_size).map{|i|
-        lines.map{|row|
+      widths = (0...max_item_size).map { |i|
+        lines.map { |row|
           if s = row[i]?
             Pretty.string_width(Pretty.remove_ansi(s))
           else
@@ -37,9 +37,9 @@ module Pretty
       }
 
       if headers
-        lines[1..0] = widths.map{|i| "-"*i}
+        lines[1..0] = widths.map { |i| "-"*i }
       end
-      
+
       return String.build do |s|
         lines.each do |row|
           s << indent

@@ -4,7 +4,7 @@ describe Pretty::Stopwatch do
   it "returns self (start, stop, reset)" do
     watch = Pretty::Stopwatch.new
     watch.start.should eq(watch)
-    watch.stop .should eq(watch)
+    watch.stop.should eq(watch)
     watch.reset.should eq(watch)
   end
 
@@ -38,7 +38,7 @@ describe Pretty::Stopwatch do
 
   it "provides measure(&block) for the Loan pattern" do
     watch = Pretty::Stopwatch.new
-    v = watch.measure{ "foo" }
+    v = watch.measure { "foo" }
     v.should eq("foo")
     watch.count.should eq(1)
     watch.last.count.should eq(1)

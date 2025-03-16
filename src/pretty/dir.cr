@@ -2,7 +2,7 @@
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # Pretty::Dir.clean("tmp/test1")
 # ```
 require "./file"

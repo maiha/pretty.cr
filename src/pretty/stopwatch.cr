@@ -6,17 +6,17 @@ class Pretty::Stopwatch
     getter sec
 
     def initialize(@sec : Float64 = 0.0, @count : Int32 = 0)
-    end                   
+    end
 
     def <<(stat : Stat)
-      @sec   += stat.sec
+      @sec += stat.sec
       @count += stat.count
     end
 
     def to_s(io : IO)
       case @count
-      when 0 ; io << "---"
-      else   ; io << "%d (%.1f sec)" % [@count, @sec]
+      when 0; io << "---"
+      else    io << "%d (%.1f sec)" % [@count, @sec]
       end
     end
   end
@@ -35,7 +35,7 @@ class Pretty::Stopwatch
 
   def initialize
     @total = Stat.new
-    @last  = Last.new
+    @last = Last.new
 
     @started_at = nil
   end
@@ -59,8 +59,8 @@ class Pretty::Stopwatch
     initialize
     self
   end
-  
-  def measure
+
+  def measure(&)
     start
     result = yield
     stop

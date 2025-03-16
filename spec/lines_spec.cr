@@ -31,10 +31,10 @@ describe "Pretty.lines" do
 
   it "(array) with multibytes" do
     array = [
-      ["1","2"],
-      ["あ","い"],
+      ["1", "2"],
+      ["あ", "い"],
     ]
-    
+
     Pretty.lines(array, delimiter: "|").should eq <<-EOF
       1 |2
       あ|い
@@ -44,10 +44,10 @@ describe "Pretty.lines" do
   it "(array) with unbalanced items" do
     array = [
       ["1"],
-      ["a","b"],
+      ["a", "b"],
       ["Z"],
     ]
-    
+
     Pretty.lines(array, delimiter: "|").should eq <<-EOF
       1|
       a|b
@@ -56,17 +56,17 @@ describe "Pretty.lines" do
   end
 
   it "(array) with headers" do
-    headers = ["1","2","3"]
+    headers = ["1", "2", "3"]
     array = [
-      ["a","foo", "x"],
+      ["a", "foo", "x"],
     ]
-    
+
     Pretty.lines(array, headers: headers).should eq <<-EOF
       12  3
       -----
       afoox
       EOF
-    
+
     Pretty.lines(array, headers: headers, delimiter: "|").should eq <<-EOF
       1|2  |3
       -|---|-
@@ -80,7 +80,7 @@ describe "Pretty.lines" do
       ["foo", "bar".colorize(:cyan).to_s],
       ["hello".colorize(:green).to_s, "world"],
     ]
-    
+
     Pretty.lines(array, delimiter: " ").should eq <<-EOF
       foo   \e[36mbar\e[0m
       \e[32mhello\e[0m world

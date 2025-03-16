@@ -13,8 +13,8 @@ module Pretty::Periodical
       update_next_report_time!
       return self
     end
-    
-    def execute
+
+    def execute(&)
       if next_report_time <= Time.now
         yield
         update_next_report_time!

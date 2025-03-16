@@ -3,8 +3,8 @@
 #
 # ### Usage
 #
-# ```crystal
-# Pretty.diff(1, nil).to_s  # => "Expected 'Int32', but got 'Nil'"
+# ```
+# Pretty.diff(1, nil).to_s # => "Expected 'Int32', but got 'Nil'"
 # ```
 module Pretty
   def self.diff(*args, **opts)
@@ -24,7 +24,7 @@ class Pretty::Diff
 
   getter entries
   property? output_size : Int32?
-  
+
   def initialize(@entries : Array(Entry))
   end
 
@@ -77,7 +77,7 @@ class Pretty::Diff
       return new(value_mismatch(a, b, truncate: value_truncate))
     end
   end
-  
+
   private def self.ok : Diff
     new(Array(Entry).new)
   end
@@ -96,4 +96,3 @@ class Pretty::Diff
     Entry.new("Expected %d items, but got %d" % [s1, s2])
   end
 end
-

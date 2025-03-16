@@ -3,7 +3,7 @@
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # Pretty::UsedMemory.new(1_234_567).bytes # => 1234567000
 # Pretty::UsedMemory.new(1_234_567).kb    # => 1234567
 # Pretty::UsedMemory.new(1_234_567).mb    # => 1234.567
@@ -33,7 +33,7 @@ record Pretty::UsedMemory, kb : Int64 do
   def to_s(io : IO)
     io << Pretty.bytes(bytes, prefix: "")
   end
-    
+
   def self.zero
     new(0)
   end

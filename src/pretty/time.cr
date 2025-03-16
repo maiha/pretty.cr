@@ -2,7 +2,7 @@
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # Pretty::Time.parse("2000-01-02 03:04:05")
 # Pretty::Time.parse("2000-01-02 03:04:05.678")
 # Pretty::Time.parse("2000-01-02T03:04:05+0900")
@@ -10,7 +10,7 @@
 # ```
 module Pretty::Time
   MONTH_NAMES = %w(January February March April May June July August September October
-November December)
+    November December)
   SHORT_MONTH_NAMES = MONTH_NAMES.map(&.[0..2])
 
   class ParseError < Exception
@@ -24,7 +24,7 @@ November December)
   def self.parse?(value : String, location : ::Time::Location? = nil) : ::Time?
     parse(value, location) rescue nil
   end
-  
+
   def self.parse(value : String, location : ::Time::Location? = nil) : ::Time
     utc = ::Time::Location::UTC
     location ||= utc
@@ -64,8 +64,7 @@ November December)
       ::Time.parse(value, "%F", location)
     when /\A(?<year>\d{4})[-: \/]?(?<month>\d{2})[-: \/]?(?<day>\d{2})[-: ]?(?<hour>\d{2})[-: ]?(?<min>\d{2})[-: ]?(?<sec>\d{2})?\Z/
       # finally, we give best effort to parse something
-      parse($~["year"].to_i, $~["month"].to_i, $~["day"].to_i, $~["hour"].to_i, $~["min"].to_i,  $~["sec"]?.try(&.to_i) || 0, location: location)
-
+      parse($~["year"].to_i, $~["month"].to_i, $~["day"].to_i, $~["hour"].to_i, $~["min"].to_i, $~["sec"]?.try(&.to_i) || 0, location: location)
     when /\A([A-Za-z]{3}\s+)?(?<month>[A-Z][a-z]{2,9})\s+(?<day>\d{2})\s+(?<hour>\d{2})[-: ]+(?<min>\d{2})[-: ]+(?<sec>\d{2})(\s+[+-]\d{4})?\s+(?<year>\d{4})\b/
       # "Tue Feb 02 11:30:14 2016"
       # "Tue Feb 02 11:30:14 +0000 2016"
@@ -73,7 +72,7 @@ November December)
       v = $~["month"]
       i = MONTH_NAMES.index(v) || SHORT_MONTH_NAMES.index(v) || raise ArgumentError.new("#{v.inspect} seems MONTH, but our dictionary doesn't support it.")
       month = i + 1
-      parse(year, month, $~["day"].to_i, $~["hour"].to_i, $~["min"].to_i,  $~["sec"].to_i, location: location)
+      parse(year, month, $~["day"].to_i, $~["hour"].to_i, $~["min"].to_i, $~["sec"].to_i, location: location)
     else
       raise ParseError.new(value)
     end
@@ -111,7 +110,7 @@ end
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # Pretty.time("2006-01-02 15:04:05")
 # ```
 module Pretty

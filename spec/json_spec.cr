@@ -18,8 +18,8 @@ describe "Pretty.json" do
   pending "(string, color: true)" do
     Pretty.json(json, color: true).should eq <<-EOF
       {
-        \e[36m\"id\"\e[0m: \e[33m\"123\"\e[0m,
-        \e[36m\"name\"\e[0m: \e[33m\"maiha\"\e[0m
+        \e[36m"id"\e[0m: \e[33m"123"\e[0m,
+        \e[36m"name"\e[0m: \e[33m"maiha"\e[0m
       }
       EOF
   end

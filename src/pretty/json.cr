@@ -25,106 +25,104 @@ module Pretty
     end
 
     {% if ::Crystal::VERSION =~ /^0\.[12]/ %}
-    def read_any
-      case @pull.kind
-      when :null
-        Pretty::Colorize.surround(@output, bold) do
-          @pull.read_null.to_json(@output)
+      def read_any
+        case @pull.kind
+        when :null
+          Pretty::Colorize.surround(@output, bold) do
+            @pull.read_null.to_json(@output)
+          end
+        when :bool
+          Pretty::Colorize.surround(@output, light_blue) do
+            @pull.read_bool.to_json(@output)
+          end
+        when :int
+          Pretty::Colorize.surround(@output, red) do
+            @pull.read_int.to_json(@output)
+          end
+        when :float
+          Pretty::Colorize.surround(@output, red) do
+            @pull.read_float.to_json(@output)
+          end
+        when :string
+          Pretty::Colorize.surround(@output, yellow) do
+            @pull.read_string.to_json(@output)
+          end
+        when :begin_array
+          read_array
+        when :begin_object
+          read_object
+        when :EOF
+          # We are done
         end
-      when :bool
-        Pretty::Colorize.surround(@output, light_blue) do
-          @pull.read_bool.to_json(@output)
-        end
-      when :int
-        Pretty::Colorize.surround(@output, red) do
-          @pull.read_int.to_json(@output)
-        end
-      when :float
-        Pretty::Colorize.surround(@output, red) do
-          @pull.read_float.to_json(@output)
-        end
-      when :string
-        Pretty::Colorize.surround(@output, yellow) do
-          @pull.read_string.to_json(@output)
-        end
-      when :begin_array
-        read_array
-      when :begin_object
-        read_object
-      when :EOF
-        # We are done
       end
-    end
-
     {% elsif ::Crystal::VERSION =~ /^0\.3[0-4]/ %}
-    # 0.30.0 breaks compatibility: kind is changed from Symbol to Enum
-    def read_any
-      case @pull.kind
-      when .null?
-        Pretty::Colorize.surround(@output, bold) do
-          @pull.read_null.to_json(@output)
+      # 0.30.0 breaks compatibility: kind is changed from Symbol to Enum
+      def read_any
+        case @pull.kind
+        when .null?
+          Pretty::Colorize.surround(@output, bold) do
+            @pull.read_null.to_json(@output)
+          end
+        when .bool?
+          Pretty::Colorize.surround(@output, light_blue) do
+            @pull.read_bool.to_json(@output)
+          end
+        when .int?
+          Pretty::Colorize.surround(@output, red) do
+            @pull.read_int.to_json(@output)
+          end
+        when .float?
+          Pretty::Colorize.surround(@output, red) do
+            @pull.read_float.to_json(@output)
+          end
+        when .string?
+          Pretty::Colorize.surround(@output, yellow) do
+            @pull.read_string.to_json(@output)
+          end
+        when .begin_array?
+          read_array
+        when .begin_object?
+          read_object
+        when .eof?
+          # We are done
+        else
+          raise "Bug: unexpected kind: #{@pull.kind}"
         end
-      when .bool?
-        Pretty::Colorize.surround(@output, light_blue) do
-          @pull.read_bool.to_json(@output)
-        end
-      when .int?
-        Pretty::Colorize.surround(@output, red) do
-          @pull.read_int.to_json(@output)
-        end
-      when .float?
-        Pretty::Colorize.surround(@output, red) do
-          @pull.read_float.to_json(@output)
-        end
-      when .string?
-        Pretty::Colorize.surround(@output, yellow) do
-          @pull.read_string.to_json(@output)
-        end
-      when .begin_array?
-        read_array
-      when .begin_object?
-        read_object
-      when .eof?
-      # We are done
-      else
-        raise "Bug: unexpected kind: #{@pull.kind}"
       end
-    end
-      
     {% else %}
-    # 0.35 or higher
-    def read_any
-      case @pull.kind
-      when .null?
-        Pretty::Colorize.surround(@output, bold) do
-          @pull.read_null.to_json(@output)
+      # 0.35 or higher
+      def read_any
+        case @pull.kind
+        when .null?
+          Pretty::Colorize.surround(@output, bold) do
+            @pull.read_null.to_json(@output)
+          end
+        when .bool?
+          Pretty::Colorize.surround(@output, light_blue) do
+            @pull.read_bool.to_json(@output)
+          end
+        when .int?
+          Pretty::Colorize.surround(@output, red) do
+            @pull.read_int.to_json(@output)
+          end
+        when .float?
+          Pretty::Colorize.surround(@output, red) do
+            @pull.read_float.to_json(@output)
+          end
+        when .string?
+          Pretty::Colorize.surround(@output, yellow) do
+            @pull.read_string.to_json(@output)
+          end
+        when .begin_array?
+          read_array
+        when .begin_object?
+          read_object
+        when .eof?
+          # We are done
+        else
+          raise "Bug: unexpected kind: #{@pull.kind}"
         end
-      when .bool?
-        Pretty::Colorize.surround(@output, light_blue) do
-          @pull.read_bool.to_json(@output)
-        end
-      when .int?
-        Pretty::Colorize.surround(@output, red) do
-          @pull.read_int.to_json(@output)
-        end
-      when .float?
-        Pretty::Colorize.surround(@output, red) do
-          @pull.read_float.to_json(@output)
-        end
-      when .string?
-        Pretty::Colorize.surround(@output, yellow) do
-          @pull.read_string.to_json(@output)
-        end
-      when .begin_array?
-        read_array
-      when .begin_object?
-        read_object
-      when .eof?
-      # We are done
-      else
-        raise "Bug: unexpected kind: #{@pull.kind}"
       end
-    end
     {% end %}
 
     def read_array

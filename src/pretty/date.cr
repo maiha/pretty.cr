@@ -2,7 +2,7 @@
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # Pretty::Date.parse("2001-02-03")
 # Pretty::Date.parse("2001/02/03")
 # Pretty::Date.parse("20010203")
@@ -91,7 +91,7 @@ end
 #
 # ### Usage
 #
-# ```crystal
+# ```
 # Pretty.date("2001-02-03")
 # Pretty.dates("20180908-20180909")
 # Pretty.dates("201809")
