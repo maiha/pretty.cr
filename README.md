@@ -53,6 +53,7 @@ rm_f("foo.txt") # cd, cmp, touch, cp, cp_r, ln, ln_s, ln_sf, mkdir, mkdir_p, mti
 
 #### old crystal
 - use v0.5.7 for crystal-0.24 or lower
+- use v1.1.3 for crystal-0.27 or lower
 
 #### breaking changes
 - v0.9.6: `Pretty.bytes` returns `Pretty::Bytes` rather than `String` (use `to_s` for backward compats)
